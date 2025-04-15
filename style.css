@@ -33,7 +33,7 @@ section {
 .container{
   width: 100%;
   height: auto;
-  max-width: 1200px; /*prevents overscaling*/
+  max-width: 1000px; /*prevents overscaling*/
   margin: 0 auto;
 }
 
@@ -52,11 +52,10 @@ form {
   background-color: rgb(240, 240, 240);
   border: none;
   border-radius: 4px; /*goes here, not blocked by background color*/
-  
 }
 
 form input {
-  width: 100%;
+  width: 90%; /*space for icon*/
   background-color: transparent; /*ensures form-declared border isn't covered*/
   padding: 10px;
   border: none;
@@ -71,7 +70,18 @@ form ion-icon {
   height: 3.5vh;
   vertical-align: middle;
   margin-bottom: 5px;
-  color: rgb(70, 70, 70);
+  color: rgb(75, 75, 75);
   
 }
+
+.search-result {
+  margin-top: 50px;
+  width: 100%;
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+
 
