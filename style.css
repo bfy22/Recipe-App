@@ -66,3 +66,12 @@ form input {
   
 }
 
+form ion-icon {
+  width: 9%;
+  height: 3.5vh;
+  vertical-align: middle;
+  margin-bottom: 5px;
+  color: rgb(70, 70, 70);
+  
+}
+
