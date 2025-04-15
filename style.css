@@ -74,12 +74,12 @@ form ion-icon {
   
 }
 
-.search-result {
+.search-results {
   margin-top: 50px;
   width: 100%;
   display: grid;
   grid-gap: 30px;
-  grid-template: auto / repeat(auto-fit, (minmax 300px, 1fr));
+  grid-template: auto / repeat(auto-fit, minmax(600px, 1fr));
 }
 
 .item {
