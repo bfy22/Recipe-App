@@ -20,20 +20,19 @@ html {
 section { 
   min-height: 100vh;
   width: 100%; 
-
   background-color: rgb(255, 255, 255);
 
   display: flex;
   align-items: center;
   justify-content: center;
   
-  padding: 100px 0;
+  padding: 50px 0;
 }
 
 .container{
   width: 100%;
   height: auto;
-  max-width: 1000px; /*prevents overscaling*/
+  max-width: 1700px; /*decides the max amount of space items can use per row*/
   margin: 0 auto;
 }
 
@@ -48,8 +47,8 @@ section {
 form {
   width: 100%;
   max-width: 400px;
-  margin: 20px auto; /*commas are bad*/
   background-color: rgb(240, 240, 240);
+  margin: 20px auto; /*commas are bad*/
   border: none;
   border-radius: 4px; /*goes here, not blocked by background color*/
 }
@@ -57,21 +56,20 @@ form {
 form input {
   width: 90%; /*space for icon*/
   background-color: transparent; /*ensures form-declared border isn't covered*/
-  padding: 10px;
-  border: none;
-  outline: none;
   font-size: 18px;
+
+  padding: 10px;
   display: inline-block;
-  
+  border: none;
+  outline: none;  
 }
 
 form ion-icon {
-  width: 9%;
+  width: 8%; /*guarantee responsiveness*/
   height: 3.5vh;
+  color: rgb(75, 75, 75);
   vertical-align: middle;
   margin-bottom: 5px;
-  color: rgb(75, 75, 75);
-  
 }
 
 .search-results {
@@ -79,7 +77,8 @@ form ion-icon {
   width: 100%;
   display: grid;
   grid-gap: 30px;
-  grid-template: auto / repeat(auto-fit, minmax(600px, 1fr));
+  grid-template: auto / repeat(auto-fit, minmax(320px, 1fr)); 
+  
 }
 
 .item {
@@ -96,3 +95,49 @@ form ion-icon {
   border-radius: 4px;
 }
 
+.item .flex-result-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item .title {
+  color: black;
+  margin: 10px 10px 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.recipe-button {
+  color: black;
+  background-color: rgb(210, 210, 210);
+  font-size: 17px; 
+
+  width: 100px;
+  height: auto;
+  padding: 6px 0;
+  margin-top: 6px;
+
+  text-decoration: none;
+  text-align: center;
+  align-self: flex-start;
+
+  transition: background-color 0.15s, opacity 0.1s, box-shadow 0.2s, width 0.2s;;
+  cursor: pointer;
+}
+
+.recipe-button:hover{
+  background-color: rgb(205, 205, 205);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
+  width: 110px;
+}
+
+.recipe-button:active{
+  opacity: 0.6;
+}
+
+.nutrition-data{
+  color: black;
+  display: block;
+  font-size: 14px;
+}
