@@ -94,6 +94,21 @@ form ion-icon {
   clip-path: rect(0 72% 90% 10%);
 }
 
+@media (max-width: 768px) {
+  .search-results {
+    grid-gap: 10px;
+  }
+  .container.initial .brand-name {
+    font-size: 48px;
+  }
+  .container.initial form {
+    max-width: 500px;
+  }
+  .container.initial form input {
+    padding: 10px;
+    font-size: 18px;
+  }
+}
 
 .search-results {
   margin-top: 50px;
