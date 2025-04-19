@@ -14,7 +14,7 @@ searchForm.addEventListener('submit', (event) => {
 
 
 async function callAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeInformation=true&number=15`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&number=15`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for recipe fetches*/
   console.log(fetchedData);
@@ -27,15 +27,15 @@ function renderSearchResults(searchResults) { //HTML generate with data from arr
   searchResults.map(result => {
     generatedResultsHTML += `
           <div class="item">
-            <img src="${result.image}" alt="">
+            <img src="${result.image}" alt=""> 
             <div class="flex-result-info">
-              <h1 class="title">Fluffy Pancakes</h1>
+              <h1 class="title"><a class="titleUrl" href="${result.sourceUrl}">${result.title}</a></h1>
               <a class="recipe-button" href="#">Recipe</a>
             </div>
             <p class="nutrition-data">Calories: 300 </p>
           </div>
         `
-    searchResultDivObj.innerHTML = generatedResultsHTML;
+    searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title
   }) 
 }
 

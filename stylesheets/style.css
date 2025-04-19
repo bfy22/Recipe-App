@@ -106,7 +106,19 @@ form ion-icon {
   margin: 10px 10px 10px 0;
   font-size: 18px;
   font-weight: 500;
+
 }
+
+.item .titleUrl {
+  text-decoration: none;
+  color: unset;
+}
+
+.item .titleUrl:hover {
+  text-decoration: none;
+  color: revert;
+}
+
 
 .recipe-button {
   color: black;
