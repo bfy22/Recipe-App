@@ -1,5 +1,5 @@
 const searchForm = document.querySelector('.js-form');
-const searchResultObj = document.querySelector('.js-search-results');
+const searchResultDivObj = document.querySelector('.js-search-results');
 const projectContainer  = document.querySelector('.js-container');
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 
@@ -18,9 +18,24 @@ async function callAPI() {
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for recipe fetches*/
   console.log(fetchedData);
+  renderSearchResults(fetchedData.results); //param is parsed searchresults array data
+
 }
 
-function renderSearchResults() {
-
+function renderSearchResults(searchResults) { //HTML generate with data from array
+  let generatedResultsHTML = ''
+  searchResults.map(result => {
+    generatedResultsHTML += `
+          <div class="item">
+            <img src="${result.image}" alt="">
+            <div class="flex-result-info">
+              <h1 class="title">Fluffy Pancakes</h1>
+              <a class="recipe-button" href="#">Recipe</a>
+            </div>
+            <p class="nutrition-data">Calories: 300 </p>
+          </div>
+        `
+    searchResultDivObj.innerHTML = generatedResultsHTML;
+  }) 
 }
 
