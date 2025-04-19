@@ -70,7 +70,30 @@ form ion-icon {
   color: rgb(75, 75, 75);
   vertical-align: middle;
   margin-bottom: 5px;
+  cursor: pointer;
+  clip-path: rect(0 29px 28px 4px);
+  
 }
+
+.container.initial .brand-name {
+  font-size: 72px;
+}
+
+.container.initial form {
+  max-width: 800px;
+}
+  
+.container.initial form input{
+  padding: 20px;
+  font-size: 27px
+}
+
+.container.initial form ion-icon{
+  margin-bottom: 10px;
+  height: 4vh;
+  clip-path: rect(0 72% 90% 10);
+}
+
 
 .search-results {
   margin-top: 50px;
