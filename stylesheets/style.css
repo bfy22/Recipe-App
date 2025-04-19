@@ -91,7 +91,7 @@ form ion-icon {
 .container.initial form ion-icon{
   margin-bottom: 10px;
   height: 4vh;
-  clip-path: rect(0 72% 90% 10);
+  clip-path: rect(0 72% 90% 10%);
 }
 
 
