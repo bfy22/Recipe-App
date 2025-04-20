@@ -44,6 +44,11 @@ section {
   text-align: center;
 }
 
+.brandUrl {
+  text-decoration: none;
+  color: unset;
+}
+
 form {
   width: 100%;
   max-width: 400px;

@@ -14,19 +14,19 @@ searchForm.addEventListener('submit', (event) => {
 
 
 async function callAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&number=15`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&number=24`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   console.log(fetchedData);
-  renderSearchResults(fetchedData.results); //param is parsed searchresults array data
+  renderSearchResults(fetchedData.results); //param is parsed query results array data
 
 }
 
-function renderSearchResults(searchResults) { //HTML generate with data from array
+function renderSearchResults(searchResults) { //generate HTML with data from array
   projectContainer.classList.remove('initial');
 
   let generatedResultsHTML = ''
-  searchResults.map(result => {
+  searchResults.map(result => { //like forEach but generates an array object 
     generatedResultsHTML += `
           <div class="item">
             <img src="${result.image}" alt=""> 
@@ -37,11 +37,7 @@ function renderSearchResults(searchResults) { //HTML generate with data from arr
             <p class="nutrition-data">Calories: 300 </p>
           </div>
         `
-    searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title
-
-    
+    searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title    
   }) 
-
-  
 }
 
