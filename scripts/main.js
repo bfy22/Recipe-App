@@ -24,7 +24,7 @@ async function callAPI() {
 
 function renderSearchResults(searchResults) { //HTML generate with data from array
   projectContainer.classList.remove('initial');
-  
+
   let generatedResultsHTML = ''
   searchResults.map(result => {
     generatedResultsHTML += `
@@ -41,6 +41,7 @@ function renderSearchResults(searchResults) { //HTML generate with data from arr
 
     
   }) 
+
   
 }
 

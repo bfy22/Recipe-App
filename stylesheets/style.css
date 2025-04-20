@@ -108,7 +108,21 @@ form ion-icon {
     padding: 10px;
     font-size: 18px;
   }
+  .container.initial form ion-icon{
+    margin-bottom: 5px;
+    height: 3.5vh;
+    clip-path: rect(0 80% 91% 19%);
+  }
 }
+
+@media (max-width: 480px) {
+  .container.initial form ion-icon{
+    margin-bottom: 5px;
+    height: 3.5vh;
+    clip-path: rect(0 93% 86% 10%);
+  }
+}
+
 
 .search-results {
   margin-top: 50px;
@@ -140,7 +154,6 @@ form ion-icon {
 }
 
 .item .title {
-  color: black;
   margin: 10px 10px 10px 0;
   font-size: 18px;
   font-weight: 500;
