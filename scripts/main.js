@@ -5,12 +5,15 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 
 let userSearchQuery = '';
 
+renderSearchResults();
 
-searchForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  userSearchQuery = event.target.querySelector('input').value;
-  callAPI();
-});
+function renderSearchResults() {
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    userSearchQuery = event.target.querySelector('input').value;
+    callAPI();
+  });
+}
 
 
 async function callAPI() {
@@ -22,7 +25,7 @@ async function callAPI() {
 
 }
 
-function renderSearchResults(searchResults) { //generate HTML with data from array
+function generateSearchResults(searchResults) { //generate HTML with data from array
   projectContainer.classList.remove('initial');
 
   let generatedResultsHTML = ''
