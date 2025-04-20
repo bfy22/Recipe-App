@@ -21,7 +21,7 @@ async function callAPI() {
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   console.log(fetchedData);
-  renderSearchResults(fetchedData.results); //param is parsed query results array data
+  generateSearchResults(fetchedData.results); //param is parsed query results array data
 
 }
 
