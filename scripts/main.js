@@ -31,7 +31,7 @@ function renderSearchResults(searchResults) { //generate HTML with data from arr
           <div class="item">
             <img src="${result.image}" alt=""> 
             <div class="flex-result-info">
-              <h1 class="title"><a class="titleUrl" href="${result.sourceUrl}">${result.title}</a></h1>
+              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
               <a class="recipe-button" href="#">Recipe</a>
             </div>
             <p class="nutrition-data">Calories: 300 </p>

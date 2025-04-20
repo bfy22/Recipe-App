@@ -44,7 +44,7 @@ section {
   text-align: center;
 }
 
-.brandUrl {
+.brand-Url {
   text-decoration: none;
   color: unset;
 }
@@ -165,12 +165,12 @@ form ion-icon {
 
 }
 
-.item .titleUrl {
+.item .title-Url {
   text-decoration: none;
   color: unset;
 }
 
-.item .titleUrl:hover {
+.item .title-Url:hover {
   text-decoration: none;
   color: revert;
 }
