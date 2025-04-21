@@ -35,7 +35,7 @@ function generateSearchResults(searchResults) { //generate HTML with data from a
             <img src="${result.image}" alt=""> 
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-              <a class="recipe-buttonm" href="#">Recipe</a>
+              <a class="recipe-buttonm" data-popup-target="#popup">Recipe</a> 
             </div>
             <p class="nutrition-data">Calories: 300 </p>
           </div>
