@@ -1,3 +1,7 @@
+import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
+import { applyPopup } from './popup.js';
+
+
 const searchForm = document.querySelector('.js-form');
 const searchResultDivObj = document.querySelector('.js-search-results');
 const projectContainer  = document.querySelector('.js-container');
@@ -6,6 +10,7 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
 renderSearchResults();
+
 
 function renderSearchResults() {
   searchForm.addEventListener('submit', (event) => {
@@ -35,12 +40,13 @@ function generateSearchResults(searchResults) { //generate HTML with data from a
             <img src="${result.image}" alt=""> 
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-              <a class="recipe-buttonm" data-popup-target="#popup">Recipe</a> 
+              <button class="recipe-button" data-popup-target="#popup">Recipe</button> 
             </div>
             <p class="nutrition-data">Calories: 300 </p>
           </div>
         `
     searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title    
   }) 
+  applyPopup();
 }
 
