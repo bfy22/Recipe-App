@@ -11,7 +11,7 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
 renderSearchResults();
-
+handlePopup();
 
 function renderSearchResults() {
   searchForm.addEventListener('submit', (event) => {
@@ -42,16 +42,16 @@ function generateSearchResults(searchResults) { //generate HTML with data from a
             <img src="${result.image}" alt=""> 
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-              <button class="recipe-button" data-popup-target="#popup">Recipe</button> 
+              <button class="recipe-button js-recipe-button" data-popup-target="#popup">Recipe</button> 
             </div>
             <p class="nutrition-data">Calories: 300 </p>
           </div>
-        `
+        `;
   });
 
   searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title   
-  handlePopup();
-  
+
+
 }
 
 

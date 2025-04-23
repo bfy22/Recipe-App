@@ -1,31 +1,27 @@
-const openPopupButtons = document.querySelectorAll('[data-popup-target]');
-const closePopupButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
 
 
 
 export function handlePopup() {
-  openPopupButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const popup = document.querySelector(button.dataset.popupTarget); /*extracts the popup HTML as DOM*/
+  document.body.addEventListener('click', (event) => {
+    const target = event.target;
+    
+    if (target.matches('.js-recipe-button')) {
+      //open popup
+      const popup = document.querySelector(target.dataset.popupTarget);
+      if (popup) {
+        popup.classList.add('active');
+        overlay.classList.add('active');
+      }
       
-      openPopup(popup);
-
-    });
-  });
-
-  overlay.addEventListener('click', () => {
-    const popups = document.querySelectorAll('.popup.active');
-    popups.forEach(popup => {
-      closePopup(popup);
-    })
-  });
-
-  closePopupButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const popup = button.closest('.popup'); //closest parent of DOM
-      closePopup(popup);
-    });
+    } else if (target.matches('[data-close-button]')) {
+      //close popup
+      const popup = target.closest('.popup');
+      if (popup) {
+        popup.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+    }
   });
 }
 
