@@ -4,11 +4,11 @@ const overlay = document.getElementById('overlay');
 
 
 
-export function handlePopup() {
+function switchPopupState() {
   openPopupButtons.forEach(button => {
     button.addEventListener('click', () => {
       const popup = document.querySelector(button.dataset.popupTarget); /*extracts the popup HTML as DOM*/
-      
+      console.log(popup);
       openPopup(popup);
 
     });

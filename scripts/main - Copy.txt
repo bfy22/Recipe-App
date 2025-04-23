@@ -1,17 +1,16 @@
-import {handlePopup} from './popup.js';
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
-
+import {applyPopup} from './popup.js';
 
 
 const searchForm = document.querySelector('.js-form');
 const searchResultDivObj = document.querySelector('.js-search-results');
 const projectContainer  = document.querySelector('.js-container');
-const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
+const API_Key = '';
 
 let userSearchQuery = '';
 
 renderSearchResults();
-
+switchPopupState();
 
 function renderSearchResults() {
   searchForm.addEventListener('submit', (event) => {
