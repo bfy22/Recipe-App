@@ -35,6 +35,7 @@ function generateSearchResults(searchResults) { //generate HTML with data from a
   projectContainer.classList.remove('initial');
 
   let generatedResultsHTML = ''
+
   searchResults.map(result => { //like forEach but generates an array object 
     generatedResultsHTML += `
           <div class="item">
@@ -46,8 +47,10 @@ function generateSearchResults(searchResults) { //generate HTML with data from a
             <p class="nutrition-data">Calories: 300 </p>
           </div>
         `
-    searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title    
-  }) 
+  });
+
+  searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title   
+  handlePopup();
   
 }
 
