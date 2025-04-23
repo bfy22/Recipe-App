@@ -1,6 +1,5 @@
-import {handlePopup} from './popup.js';
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
-
+import {handlePopup} from './popup.js';
 
 
 const searchForm = document.querySelector('.js-form');
