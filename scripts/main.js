@@ -37,25 +37,25 @@ function generateSearchResults(searchResults) { //create array of objects with r
   const recipeDataArray = searchResults.map(result => { //like forEach but generates an array object 
 
     return {
-      id: result.id,
-      html: `
-          <div class="item">
-            <img src="${result.image}" alt=""> 
-            <div class="flex-result-info">
-              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-              <button class="recipe-button js-recipe-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
-            </div>
-            <p class="nutrition-data">Nutrition: 300 </p>
-          </div>
-        `,
-      ingredients: result.analyzedInstructions.steps[0].ingredients.name,
-      instructions: result.analyzedInstructions.steps.step,
+      id: result.id,     
+      ingredients: result.analyzedInstructions?.[0]?.steps?.[0]?.ingredients?.map(ingredient => ingredient.name) || [],
+      instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
       nutritionInfo: result.nutrition.nutrients,
-      cookingTime: result.readyInMinutes,
+      cookingTimeMins: result.readyInMinutes,
       dairyFree: result.dairyFree,
       glutenFree: result.glutenFree,
       vegan: result.vegan,
-      vegetarian: result.vegetarian
+      vegetarian: result.vegetarian,
+      html: `
+        <div class="item">
+          <img src="${result.image}" alt=""> 
+          <div class="flex-result-info">
+            <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
+            <button class="recipe-button js-recipe-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
+          </div>
+          <p class="nutrition-data">Nutrition: 300 </p>
+        </div>
+      `
     }       
   });
   console.log(recipeDataArray);
