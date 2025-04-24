@@ -59,7 +59,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
     }       
   });
   console.log(recipeDataArray);
-  const generatedResultsHTML = recipeDataArray.map(data => data.html)
+  const generatedResultsHTML = recipeDataArray.map(data => data.html).join('');
   searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title  
   
   return recipeDataArray;
