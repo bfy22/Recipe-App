@@ -23,7 +23,7 @@ function renderSearchResults() {
 
 
 async function callAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&number=24`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=24`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   console.log(fetchedData);
