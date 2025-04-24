@@ -38,7 +38,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
 
     return {
       id: result.id,     
-      ingredients: result.analyzedInstructions?.[0]?.steps?.[0]?.ingredients?.map(ingredient => ingredient.name) || [],
+      ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
       nutritionInfo: result.nutrition.nutrients,
       cookingTimeMins: result.readyInMinutes,
