@@ -12,6 +12,7 @@ let userSearchQuery = '';
 renderSearchResults();
 handlePopup();
 
+
 function renderSearchResults() {
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -22,7 +23,7 @@ function renderSearchResults() {
 
 
 async function callAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&number=24`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&number=24`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   console.log(fetchedData);
@@ -30,27 +31,38 @@ async function callAPI() {
   
 }
 
-function generateSearchResults(searchResults) { //generate HTML with data from array
+function generateSearchResults(searchResults) { //create array of objects with relevant data
   projectContainer.classList.remove('initial');
 
-  let generatedResultsHTML = ''
+  const recipeDataArray = searchResults.map(result => { //like forEach but generates an array object 
 
-  searchResults.map(result => { //like forEach but generates an array object 
-    generatedResultsHTML += `
+    return {
+      id: result.id,
+      html: `
           <div class="item">
             <img src="${result.image}" alt=""> 
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-              <button class="recipe-button js-recipe-button" data-popup-target="#popup">Recipe</button> 
+              <button class="recipe-button js-recipe-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
             </div>
-            <p class="nutrition-data">Calories: 300 </p>
+            <p class="nutrition-data">Nutrition: 300 </p>
           </div>
-        `;
+        `,
+      ingredients: result.analyzedInstructions.steps[0].ingredients.name,
+      instructions: result.analyzedInstructions.steps.step,
+      nutritionInfo: result.nutrition.nutrients,
+      cookingTime: result.readyInMinutes,
+      dairyFree: result.dairyFree,
+      glutenFree: result.glutenFree,
+      vegan: result.vegan,
+      vegetarian: result.vegetarian
+    }       
   });
-
-  searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title   
-
-
+  console.log(recipeDataArray);
+  const generatedResultsHTML = recipeDataArray.map(data => data.html)
+  searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title  
+  
+  return recipeDataArray;
 }
 
 
