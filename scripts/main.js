@@ -55,7 +55,10 @@ function generateSearchResults(searchResults) { //create array of objects with r
             <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
             <button class="recipe-button js-recipe-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
           </div>
-          <p class="nutrition-data">Nutrition: 300 </p>
+          <div class="flex-result-info">
+            <p class="nutrition-data">Nutrition: 300 </p>
+            <button class="steps-button js-steps-button" data-popup-target="#popup" data-item-id=${result.id}>Steps</button> 
+          </div>
         </div>
       `
     }       

@@ -45,12 +45,12 @@
 }
 
 
-.recipe-button {
+.recipe-button, .steps-button {
   color: black;
   background-color: rgb(210, 210, 210);
   font-size: 17px; 
 
-  width: 100px;
+  min-width: 100px;
   height: auto;
   padding: 6px 0;
   margin-top: 6px;
