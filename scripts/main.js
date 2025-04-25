@@ -1,5 +1,5 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
-import {handlePopup} from './popup.js';
+import {setPopupContent} from './popup.js';
 
 
 const searchForm = document.querySelector('.js-form');
@@ -10,7 +10,8 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
 renderSearchResults();
-handlePopup();
+//handlePopup();
+
 
 
 function renderSearchResults() {
@@ -27,8 +28,8 @@ async function callAPI() {
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   console.log(fetchedData);
-  generateSearchResults(fetchedData.results); //param is parsed query results array data
-  
+  const recipeDataArray = generateSearchResults(fetchedData.results); //param is parsed query results array data
+  setPopupContent(recipeDataArray);
 }
 
 function generateSearchResults(searchResults) { //create array of objects with relevant data
@@ -37,6 +38,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
   const recipeDataArray = searchResults.map(result => { //like forEach but generates an array object 
 
     return {
+      title: result.title,
       id: result.id,     
       ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
