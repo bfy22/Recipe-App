@@ -1,5 +1,5 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
-import {setPopupContent} from './popup.js';
+import {setupPopupContent} from './popup.js';
 
 
 const searchForm = document.querySelector('.js-form');
@@ -29,7 +29,7 @@ async function callAPI() {
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   console.log(fetchedData);
   const recipeDataArray = generateSearchResults(fetchedData.results); //param is parsed query results array data
-  setPopupContent(recipeDataArray);
+  setupPopupContent(recipeDataArray);
 }
 
 function generateSearchResults(searchResults) { //create array of objects with relevant data
@@ -42,7 +42,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
       id: result.id,     
       ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
-      nutritionInfo: result.nutrition.nutrients,
+      nutrition: result.nutrition.nutrients,
       cookingTimeMins: result.readyInMinutes,
       dairyFree: result.dairyFree,
       glutenFree: result.glutenFree,
@@ -51,13 +51,15 @@ function generateSearchResults(searchResults) { //create array of objects with r
       html: `
         <div class="item">
           <img src="${result.image}" alt=""> 
-          <div class="flex-result-info">
-            <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-            <button class="recipe-button js-recipe-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
-          </div>
-          <div class="flex-result-info">
-            <p class="nutrition-data">Nutrition: 300 </p>
-            <button class="steps-button js-steps-button" data-popup-target="#popup" data-item-id=${result.id}>Steps</button> 
+          <div>
+            <div class="flex-result-info">
+              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
+              <button class="recipe-button js-ingredients-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
+            </div>
+            <div class="flex-result-info flex-result-bottom">
+              <p class="nutrition-data js-nutrition-button" data-popup-target="#popup" data-item-id=${result.id}>Nutrition: 300 </p>
+              <button class="steps-button js-instructions-button" data-popup-target="#popup" data-item-id=${result.id}>Steps</button> 
+            </div>
           </div>
         </div>
       `
