@@ -10,7 +10,7 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
 renderSearchResults();
-//handlePopup();
+
 
 
 
@@ -42,7 +42,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
       id: result.id,     
       ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
-      nutrition: result.nutrition.nutrients,
+      nutrition: result.nutrition.nutrients.map(item => `${item.name}: ${item.amount}${item.unit}`),
       cookingTimeMins: result.readyInMinutes,
       dairyFree: result.dairyFree,
       glutenFree: result.glutenFree,
@@ -65,7 +65,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
       `
     }       
   });
-  console.log(recipeDataArray);
+  
   const generatedResultsHTML = recipeDataArray.map(data => data.html).join('');
   searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title  
   

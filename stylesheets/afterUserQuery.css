@@ -25,7 +25,7 @@ section {
 .container{
   width: 100%;
   height: auto;
-  max-width: 1700px; /*decides the max amount of space items can use per row*/
+  max-width: 1700px; /*decides the max amount of space elements are in per row*/
   margin: 0 auto;
 }
 

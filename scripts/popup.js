@@ -1,10 +1,11 @@
+import { capitalizeEveryWord } from "./utils/capitlizeEveryWord.js";
 const overlay = document.getElementById('overlay');
 
 
 //sets listeners to push recipe info with DOM
 export function setupPopupContent(recipeDataArray) { 
   document.body.addEventListener('click', event => {
-    if((event.target.classList.contains('js-ingredients-button')) ||(event.target.classList.contains('js-instructions-button')) || (event.target.classList.contains('js-nutrition-button'))) {
+    if((event.target.classList.contains('js-ingredients-button')) || (event.target.classList.contains('js-instructions-button')) || (event.target.classList.contains('js-nutrition-button'))) {
       const recipeID = event.target.getAttribute('data-item-id');
       const recipeData = recipeDataArray.find(recipe => recipe.id === parseInt(recipeID)); 
 
@@ -16,6 +17,7 @@ export function setupPopupContent(recipeDataArray) {
 
 
       if(recipeData) {
+        console.log(recipeData)
         const popupBody = document.querySelector('#popup .popup-body');
         popupBody.innerHTML = `
           <h2>${recipeData.title}</h2>
@@ -29,7 +31,7 @@ export function setupPopupContent(recipeDataArray) {
     }
 
     if(event.target.matches('[data-close-button]') || event.target === overlay) {
-      closePopup(document.querySelector('.popup.active'))
+      closePopup(document.querySelector('.popup.active'));
     }
     
   });
