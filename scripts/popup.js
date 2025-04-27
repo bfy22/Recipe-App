@@ -4,13 +4,15 @@ const overlay = document.getElementById('overlay');
 //sets listeners to push recipe info with DOM
 export function setupPopupContent(recipeDataArray) { 
   document.body.addEventListener('click', event => {
-    if(event.target.classList.contains('js-recipe-button')) {
+    if((event.target.classList.contains('js-ingredients-button')) ||(event.target.classList.contains('js-instructions-button')) || (event.target.classList.contains('js-nutrition-button'))) {
       const recipeID = event.target.getAttribute('data-item-id');
       const recipeData = recipeDataArray.find(recipe => recipe.id === parseInt(recipeID)); 
 
-      const fullClassName = event.target.className;
-      const header = fullClassName.split('-')[1];
-      const content = 
+      const classNames = event.target.className.split(' ');
+      const secondClass = classNames[1];
+      const header = secondClass.split('-')[1]; //represents the title of the content and variable from recipeData
+      const bodyContent = recipeData[header].map(item => `<li>${item}</li>`).join('');
+      
 
 
       if(recipeData) {
@@ -19,14 +21,14 @@ export function setupPopupContent(recipeDataArray) {
           <h2>${recipeData.title}</h2>
           <h3>${header}</h3>
           <ul>
-            ${recipeData.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+            ${bodyContent}
           </ul>
         `;
         openPopup(document.getElementById('popup'));
       }
     }
 
-    if(event.target.matches('[data-close-button]') || target === overlay) {
+    if(event.target.matches('[data-close-button]') || event.target === overlay) {
       closePopup(document.querySelector('.popup.active'))
     }
     
