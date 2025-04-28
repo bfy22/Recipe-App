@@ -21,7 +21,7 @@ export function setupPopupContent(recipeDataArray) {
         const popupBody = document.querySelector('#popup .popup-body');
         popupBody.innerHTML = `
           <h2>${recipeData.title}</h2>
-          <h3>${header}</h3>
+          <h3>${capitalizeEveryWord(header)}</h3>
           <ul>
             ${bodyContent}
           </ul>

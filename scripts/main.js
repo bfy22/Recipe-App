@@ -1,5 +1,6 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
 import {setupPopupContent} from './popup.js';
+import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 
 
 const searchForm = document.querySelector('.js-form');
@@ -27,7 +28,7 @@ async function callAPI() {
   const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=24`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
-  console.log(fetchedData);
+  
   const recipeDataArray = generateSearchResults(fetchedData.results); //param is parsed query results array data
   setupPopupContent(recipeDataArray);
 }
@@ -35,10 +36,11 @@ async function callAPI() {
 function generateSearchResults(searchResults) { //create array of objects with relevant data
   projectContainer.classList.remove('initial');
 
-  const recipeDataArray = searchResults.map(result => { //like forEach but generates an array object 
+  const recipeDataArray = searchResults.map(result => { //generates an array object 
+    const formattedTitle = capitalizeEveryWord(result.title);
 
     return {
-      title: result.title,
+      title: formattedTitle,
       id: result.id,     
       ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
@@ -53,7 +55,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
           <img src="${result.image}" alt=""> 
           <div>
             <div class="flex-result-info">
-              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
+              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${formattedTitle}</a></h1>
               <button class="recipe-button js-ingredients-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
             </div>
             <div class="flex-result-info flex-result-bottom">
