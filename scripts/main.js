@@ -29,7 +29,10 @@ async function callAPI() {
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   
-  const recipeDataArray = generateSearchResults(fetchedData.results); //param is parsed query results array data
+  const preProcessedResults = fetchedData.results.map(result => ({ ... result,
+    title: capitalizeEveryWord(result.title)
+  }));
+  const recipeDataArray = generateSearchResults(preProcessedResults); //param is parsed query results array data
   setupPopupContent(recipeDataArray);
 }
 
@@ -37,10 +40,10 @@ function generateSearchResults(searchResults) { //create array of objects with r
   projectContainer.classList.remove('initial');
 
   const recipeDataArray = searchResults.map(result => { //generates an array object 
-    const formattedTitle = capitalizeEveryWord(result.title);
+    
 
     return {
-      title: formattedTitle,
+      title: result.title,
       id: result.id,     
       ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
@@ -55,7 +58,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
           <img src="${result.image}" alt=""> 
           <div>
             <div class="flex-result-info">
-              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${formattedTitle}</a></h1>
+              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
               <button class="recipe-button js-ingredients-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
             </div>
             <div class="flex-result-info flex-result-bottom">
