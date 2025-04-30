@@ -25,14 +25,16 @@ function renderSearchResults() {
 
 
 async function callAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=24`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=12`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   
-  const preProcessedResults = fetchedData.results.map(result => ({ ... result,
+  //cleaner implementation that is functional 
+  const preProcessedSearchResults = fetchedData.results.map(result => ({ ... result,   //clone each object
     title: capitalizeEveryWord(result.title)
   }));
-  const recipeDataArray = generateSearchResults(preProcessedResults); //param is parsed query results array data
+
+  const recipeDataArray = generateSearchResults(preProcessedSearchResults); //param is parsed query results array data
   setupPopupContent(recipeDataArray);
 }
 
@@ -72,7 +74,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
   });
   
   const generatedResultsHTML = recipeDataArray.map(data => data.html).join('');
-  searchResultDivObj.innerHTML = generatedResultsHTML; //note: write a function to capitalize each word of the title  
+  searchResultDivObj.innerHTML = generatedResultsHTML; 
   
   return recipeDataArray;
 }

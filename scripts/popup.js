@@ -17,7 +17,7 @@ export function setupPopupContent(recipeDataArray) {
 
 
       if(recipeData) {
-        console.log(recipeData)
+        
         const popupBody = document.querySelector('#popup .popup-body');
         popupBody.innerHTML = `
           <h2>${recipeData.title}</h2>
