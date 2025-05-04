@@ -1,8 +1,6 @@
 /*percentages, vh and auto for responsivesness*/
-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+body{
+  padding-bottom: 10px;
 }
 
 html {
