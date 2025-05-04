@@ -29,7 +29,7 @@ async function callAPI() {
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   
-  //cleaner implementation that is functional 
+  
   const preProcessedSearchResults = fetchedData.results.map(result => ({ ... result,   //clone each object
     title: capitalizeEveryWord(result.title)
   }));
@@ -58,6 +58,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
       html: `
         <div class="item">
           <img src="${result.image}" alt=""> 
+          <button class="favorite-button"><ion-icon name="heart-outline"></ion-icon></button>
           <div>
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
