@@ -1,7 +1,8 @@
-import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
+import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //icons
 import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 import { manageFavorites } from './favorites.js';
+import { placeholder } from './utils/placeholder.js';
 
 
 const searchForm = document.querySelector('.js-form');

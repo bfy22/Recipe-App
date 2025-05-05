@@ -52,17 +52,21 @@ img {
   font-size: 2rem;
   color: red;
 }
+.flex-result-info:first-of-type {
+  position: static;
+  top: 10px; 
+  width: 100%; 
+
+}
 
 .flex-result-info {
   display: flex;
-  vertical-align: center;
+  vertical-align: middle;
   align-items: center;
   justify-content: space-between;
 }
 
-.item .flex-result-bottom {
-  align-items: flex-end;
-}
+
 
  .title {
   margin: 0 10px 0 0;
