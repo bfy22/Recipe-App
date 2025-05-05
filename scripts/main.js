@@ -1,10 +1,11 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //search icon
 import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
+import { manageFavorites } from './favorites.js';
 
 
 const searchForm = document.querySelector('.js-form');
-const searchResultDivObj = document.querySelector('.js-search-results');
+export const searchResultDivObj = document.querySelector('.js-search-results');
 const projectContainer  = document.querySelector('.js-container');
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 
@@ -35,6 +36,8 @@ async function callAPI() {
   }));
 
   const recipeDataArray = generateSearchResults(preProcessedSearchResults); //param is parsed query results array data
+
+  manageFavorites(recipeDataArray);
   setupPopupContent(recipeDataArray);
 }
 
@@ -58,7 +61,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
       html: `
         <div class="item">
           <img src="${result.image}" alt=""> 
-          <button class="favorite-button"><ion-icon name="heart-outline"></ion-icon></button>
+          <button class="favorite-button js-favorite-button"><ion-icon name="heart-outline" data-item-id=${result.id}></ion-icon></button>
           <div>
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>

@@ -2,16 +2,16 @@ import { capitalizeEveryWord } from "./utils/capitlizeEveryWord.js";
 const overlay = document.getElementById('overlay');
 
 
-//sets listeners to push recipe info with DOM
+//extracts clicked button's js-classname (header) to push correct recipe info into Popup
 export function setupPopupContent(recipeDataArray) { 
   document.body.addEventListener('click', event => {
     if((event.target.classList.contains('js-ingredients-button')) || (event.target.classList.contains('js-instructions-button')) || (event.target.classList.contains('js-nutrition-button'))) {
       const recipeID = event.target.getAttribute('data-item-id');
       const recipeData = recipeDataArray.find(recipe => recipe.id === parseInt(recipeID)); 
 
-      const classNames = event.target.className.split(' ');
-      const secondClass = classNames[1];
-      const header = secondClass.split('-')[1]; //represents the title of the content and variable from recipeData
+      const eventClassNames = event.target.className.split(' ');
+      const secondClass = eventClassNames[1];
+      const header = secondClass.split('-')[1]; //info title and recipeData variable
       const bodyContent = recipeData[header].map(item => `<li>${item}</li>`).join('');
       
 
