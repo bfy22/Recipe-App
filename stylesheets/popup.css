@@ -10,8 +10,8 @@
   z-index: 10; 
   width: 500px;
   max-width: 80%;
+  max-height: 82vh;
   padding: 0 15px;
-  max-height: 80vh;
   overflow-y: auto;
 
   transition: 0.2s ease-in-out;

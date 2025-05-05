@@ -9,11 +9,16 @@
 
 .item {
   width: 100%;
+  height: 100%;
   border-radius: 8px;
   background-color: rgb(230, 230, 230);
   padding: 15px;
   overflow: hidden;
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 img {
@@ -39,14 +44,18 @@ img {
   padding-top: 1px;
 
   cursor: pointer;
+  
 }
+
 
 .item ion-icon {
   font-size: 2rem;
+  color: red;
 }
 
-.item .flex-result-info {
+.flex-result-info {
   display: flex;
+  vertical-align: center;
   align-items: center;
   justify-content: space-between;
 }
@@ -55,8 +64,8 @@ img {
   align-items: flex-end;
 }
 
-.item .title {
-  margin: 10px 10px 10px 0;
+ .title {
+  margin: 0 10px 0 0;
   padding: 0;
   font-size: 18px;
   font-weight: 500;
