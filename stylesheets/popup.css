@@ -10,6 +10,9 @@
   z-index: 10; 
   width: 500px;
   max-width: 80%;
+  padding: 0 15px;
+  max-height: 80vh;
+  overflow-y: auto;
 
   transition: 0.2s ease-in-out;
 }
@@ -60,4 +63,22 @@
 #overlay.active {
   opacity: 1;
   pointer-events: all;
+}
+
+.pop-recipe-title {
+ text-align: center
+}
+
+.pop-header {
+margin: 7px 0 10px 0;
+}
+
+.pop-list {
+margin-left: 13px;
+line-height: 2rem;
+
+}
+
+.pop-list li {
+  margin-bottom: 5px;
 }
