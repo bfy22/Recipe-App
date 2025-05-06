@@ -83,11 +83,13 @@ img {
   gap: 10px;
 }
 
-.flex-result-bottom {
-  margin-top: auto; 
-  
+.flex-result-info:first-of-type {
+  margin: 10px 0;
 }
 
+.flex-result-bottom {
+  margin-top: auto; 
+}
 
  .title {
   margin: 0;
@@ -108,36 +110,34 @@ img {
 }
 
 
-.recipe-button, .steps-button {
+.recipe-button, .steps-button, .nutrition-button {
   color: black;
   background-color: rgb(210, 210, 210);
   font-size: 17px; 
+  font-weight: 500;
 
   min-width: 100px;
   height: auto;
-  padding: 6px 0;
-  margin-top: 6px;
+  padding: 8px 15px;
+  border-radius: 6px;
 
   text-decoration: none;
   text-align: center;
   align-self: flex-start;
 
-  transition: background-color 0.15s, opacity 0.1s, box-shadow 0.2s, width 0.2s;;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
-.recipe-button:hover, .steps-button:hover{
+.recipe-button:hover, .steps-button:hover, .nutrition-button:hover{
   background-color: rgb(205, 205, 205);
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
-  width: 110px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
 }
 
 .recipe-button:active, .steps-button:active{
   opacity: 0.6;
 }
 
-.nutrition-data{
-  color: black;
-  display: block;
-  font-size: 14px;
-}

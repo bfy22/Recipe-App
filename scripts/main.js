@@ -69,7 +69,7 @@ function generateSearchResults(searchResults) { //create array of objects with r
               <button class="recipe-button js-ingredients-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
             </div>
             <div class="flex-result-info flex-result-bottom">
-              <p class="nutrition-data js-nutrition-button" data-popup-target="#popup" data-item-id=${result.id}>Nutrition: 300 </p>
+              <button class="nutrition-button js-nutrition-button" data-popup-target="#popup" data-item-id=${result.id}>Nutrition</button>
               <button class="steps-button js-instructions-button" data-popup-target="#popup" data-item-id=${result.id}>Steps</button> 
             </div>
           </div>
