@@ -3,8 +3,11 @@
 let favoriteRecipes = [];
 
  
-function renderFavorites() {
-  
+export function renderFavorites() {
+  const parsedFavRecipes = JSON.parse(localStorage.getItem('Favorite Recipes'));
+  console.log(parsedFavRecipes);
+  /*const favoritesDOM = document.querySelector('.js-favorites');
+  favoritesDOM.innerHTML = parsedFavRecipes;*/
 }
 
 export function manageFavorites(recipeDataArray) {
@@ -31,6 +34,11 @@ export function manageFavorites(recipeDataArray) {
     heartIcon.classList.add('bounce');
     setTimeout(() => heartIcon.classList.remove('bounce'), 400);
     console.log(favoriteRecipes); 
+    saveToLocalStorage();
   });
+  
+}
 
+function saveToLocalStorage() {
+  localStorage.setItem('Favorite Recipes', JSON.stringify(favoriteRecipes));
 }

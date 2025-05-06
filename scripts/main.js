@@ -1,7 +1,8 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //icons
 import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
-import { manageFavorites } from './favorites.js';
+import { manageFavorites, renderFavorites } from './favorites.js';
+
 
 
 
@@ -13,7 +14,7 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
 renderSearchResults();
-
+renderFavorites();
 
 
 

@@ -1,4 +1,4 @@
-.search-results {
+.search-results, .favorites {
   margin-top: 50px;
   width: 100%;
   display: grid;
@@ -84,7 +84,7 @@ img {
 }
 
 .flex-result-info:first-of-type {
-  margin: 10px 0;
+  margin: 10px 0 15px 0;
 }
 
 .flex-result-bottom {

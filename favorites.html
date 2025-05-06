@@ -5,9 +5,10 @@
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <title>Recipe Matrix</title>
 
+    <!--<link rel="stylesheet" href="stylesheets/beforeUserQuery.css">
+    <link rel="stylesheet" href="stylesheets/afterUserQuery.css"> -->
     <link rel="stylesheet" href="stylesheets/shared/general.css">
-    <link rel="stylesheet" href="stylesheets/beforeUserQuery.css">
-    <link rel="stylesheet" href="stylesheets/afterUserQuery.css">
+    <link rel="stylesheet" href="stylesheets/favorites.css">
     <link rel="stylesheet" href="stylesheets/searchResults.css">
     <link rel="stylesheet" href="stylesheets/popup.css">
     <link rel="stylesheet" href="stylesheets/shared/footer.css">
@@ -20,31 +21,19 @@
 
   <body>
     <section>
-      <div class="container initial js-container">
-        <h1 class="brand-name"><a class="brand-Url" href="">Recipe Matrix</a></h1>
+      <div class="container js-container">
+        <h1 class="brand-name"><a class="brand-Url" href="">Favorites</a></h1>
         <form class="js-form">
           <input type="text" placeholder="Search Recipe...">
           <ion-icon name="search-outline"></ion-icon>
         </form>
 
-        <div class="search-results js-search-results"></div>
-          
-        <!-- Initial Prototype
-          <div class="item">
-            <img src="./images/img-1.jpg" alt="">
-            <div class="flex-result-info">
-              <h1 class="title">Fluffy Pancakes</h1>
-              <button class="recipe-button" data-popup-target="#popup">Recipe</button>
-            </div>
-            <p class="nutrition-data">Calories: 300</p>
-          </div> -->
+        <div class="favorites js-favorites"></div>
+
         
           <div class="popup" id="popup">
             <div class="popup-header">
               <div class="title">Recipe</div>
-              <div class="diet"></div>
-              <div class="dairyFree"></div>
-              <div class="cookingTime"></div>
               <button data-close-button class="close-button">&times;</button>
             </div>
             <div class="popup-body">
