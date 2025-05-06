@@ -57,6 +57,20 @@ img {
 .item ion-icon {
   font-size: 2rem;
   color: red;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.2); } 
+  50% { transform: scale(0.9); } 
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); } 
+}
+
+
+.item ion-icon.bounce {
+  animation: bounce 0.4s ease-in-out;
 }
 
 
@@ -71,7 +85,7 @@ img {
 
 .flex-result-bottom {
   margin-top: auto; 
-  border: 1px solid red;
+  
 }
 
 
