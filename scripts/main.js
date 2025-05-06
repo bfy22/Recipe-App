@@ -2,11 +2,11 @@ import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
 import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 import { manageFavorites } from './favorites.js';
-import { placeholder } from './utils/placeholder.js';
+
 
 
 const searchForm = document.querySelector('.js-form');
-export const searchResultDivObj = document.querySelector('.js-search-results');
+const searchResultDivObj = document.querySelector('.js-search-results');
 const projectContainer  = document.querySelector('.js-container');
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 
@@ -27,7 +27,7 @@ function renderSearchResults() {
 
 
 async function callAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=12`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=8`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
   
