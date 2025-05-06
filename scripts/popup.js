@@ -17,11 +17,18 @@ export function setupPopupContent(recipeDataArray) {
 
 
       if(recipeData) {
-        
+        const diet = (recipeData.vegan) ? 'Vegan' : (recipeData.vegetarian) ? 'Vegetarian' : '';
+        document.querySelector('.popup-header .diet').innerHTML = diet;
+
+        const dairyFree = recipeData.dairyFree ? 'Dairy Free' : '';
+        document.querySelector('.popup-header .dairyFree').innerHTML = dairyFree;
+
+        document.querySelector('.popup-header .cookingTime').innerHTML = `${recipeData.cookingTimeMins} mins`;
+
         const popupBody = document.querySelector('#popup .popup-body');
         popupBody.innerHTML = `
           <h2 class="pop-recipe-title">${recipeData.title}</h2>
-          <h3 class="pop-header">${capitalizeEveryWord(header)}</h3>
+          <h3 class="pop-info-header">${capitalizeEveryWord(header)}</h3>
           <ul class="pop-list">
             ${bodyContent}
           </ul>
@@ -51,4 +58,14 @@ function closePopup(popup) {
     overlay.classList.remove('active');
   } 
 }
+
+/*function getDiet(boolVegan, boolVegetarian) {
+  let diet =''
+  if(boolVegan) {
+    diet = 'Vegan';
+  } else if(boolVegetarian) {
+    diet = 'Vegetarian';
+  } 
+  return diet;
+}*/
 
