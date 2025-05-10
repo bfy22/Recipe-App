@@ -110,17 +110,37 @@ function authenticateToken(req, res, next) {
 
 
 app.get('/favorites', authenticateToken, async (req, res) => {
-  const user = await User.findOne({ username: req.user.username });
-  res.json(user.favorites);
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      console.error('User not found:', req.user.username); // Debug log
+      return res.status(404).send('User not found');
+    }
+    console.log('Fetched favorites:', user.favorites); // Debug log
+    res.json(user.favorites);
+  } catch (error) {
+    console.error('Error fetching favorites:', error);
+    res.status(500).send('Error fetching favorites');
+  }
 });
 
 
 app.post('/favorites', authenticateToken, async (req, res) => {
   const { recipe } = req.body;
-  const user = await User.findOne({ username: req.user.username });
-  user.favorites.push(recipe);
-  await user.save();
-  res.status(200).send('Recipe added to favorites');
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      console.error('User not found:', req.user.username); // Debug log
+      return res.status(404).send('User not found');
+    }
+    user.favorites.push(recipe);
+    await user.save();
+    console.log('Updated favorites:', user.favorites); // Debug log
+    res.status(200).send('Recipe added to favorites');
+  } catch (error) {
+    console.error('Error saving favorite:', error);
+    res.status(500).send('Error saving favorite');
+  }
 });
 
 
