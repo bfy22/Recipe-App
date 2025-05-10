@@ -14,7 +14,9 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../'))); // Serve static files from the parent directory
 
 
-mongoose.connect('mongodb://localhost:27017/recipeApp');
+mongoose.connect('mongodb://localhost:27017/recipeApp')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('Failed to connect to MongoDB:', err));
 
 
 const userSchema = new mongoose.Schema({
@@ -25,27 +27,24 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-
 app.post('/register', async (req, res) => {
-  app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-  
-    // Check if the username already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).send('Username already exists');
-    }
-  
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword, favorites: [] });
-    try {
-      await user.save();
-      res.status(201).send('User registered');
-    } catch (error) {
-      console.error('Error registering user:', error);
-      res.status(500).send('Error registering user');
-    }
-  });
+  const { username, password } = req.body;
+
+  // Check if the username already exists
+  const existingUser = await User.findOne({ username });
+  if (existingUser) {
+    return res.status(400).send('Username already exists');
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = new User({ username, password: hashedPassword, favorites: [] });
+  try {
+    await user.save();
+    res.status(201).send('User registered');
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).send('Error registering user');
+  }
 });
 
 
