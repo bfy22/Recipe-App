@@ -3,11 +3,31 @@
 let favoriteRecipes = [];
 
  
-export function renderFavorites() {
-  const parsedFavRecipes = JSON.parse(localStorage.getItem('Favorite Recipes'));
-  console.log(parsedFavRecipes);
-  /*const favoritesDOM = document.querySelector('.js-favorites');
-  favoritesDOM.innerHTML = parsedFavRecipes;*/
+export async function renderFavorites() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Please log in to view your favorites');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const response = await fetch('http://localhost:3000/favorites', {
+    headers: { Authorization: token },
+  });
+
+  if (response.ok) {
+    const favorites = await response.json();
+    const favoritesDOM = document.querySelector('.js-favorites');
+    const favoritesHTML = favorites.map(recipe => `
+      <div class="favorite-item">
+        <h2>${recipe.title}</h2>
+        <img src="${recipe.image}" alt="${recipe.title}">
+      </div>
+    `).join('');
+    favoritesDOM.innerHTML = favoritesHTML;
+  } else {
+    alert('Failed to fetch favorites');
+  }
 }
 
 export function manageFavorites(recipeDataArray) {
