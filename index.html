@@ -19,46 +19,34 @@
   </head>
 
   <body>
-    <section>
-      <div class="container initial js-container">
-        <h1 class="brand-name"><a class="brand-Url" href="">Recipe Matrix</a></h1>
-        <form class="js-form">
-          <input type="text" placeholder="Search Recipe...">
-          <ion-icon name="search-outline"></ion-icon>
-        </form>
+    <header>
+      <h1 class="brand-name"><a class="brand-Url" href="#">Recipe Matrix</a></h1>
+      <button id="logout-button" class="logout-button" style="display: none;">Log Out</button>
+    </header>
 
-        <div class="search-results js-search-results"></div>
-          
-        <!-- Initial Prototype
-          <div class="item">
-            <img src="./images/img-1.jpg" alt="">
-            <div class="flex-result-info">
-              <h1 class="title">Fluffy Pancakes</h1>
-              <button class="recipe-button" data-popup-target="#popup">Recipe</button>
-            </div>
-            <p class="nutrition-data">Calories: 300</p>
-          </div> -->
+    <main id="app">
+      <!-- Dynamic content will be rendered here -->
+    </main>
         
-          <div class="popup" id="popup">
-            <div class="popup-header">
-              <div class="title">Recipe</div>
-              <div class="diet"></div>
-              <div class="dairyFree"></div>
-              <div class="cookingTime"></div>
-              <button data-close-button class="close-button">&times;</button>
-            </div>
-            <div class="popup-body">
-              
-            </div>
-          </div>
-          <div class="" id="overlay"></div>
-        </div>
-    </section>
+    <div class="popup" id="popup">
+      <div class="popup-header">
+        <div class="title">Recipe</div>
+        <div class="diet"></div>
+        <div class="dairyFree"></div>
+        <div class="cookingTime"></div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="popup-body">
+      </div>
+    </div>
+    <div class="" id="overlay"></div>
+  
+    
 
     <footer>
       <div class="footer">
-        <a class="favorites-bar" href="favorites.html">a</a>
-        <a class="home-bar" href="index.html">b</a>
+        <button class="favorites-bar" data-page="favorites">Favorites</button>
+        <button class="home-bar" data-page="home">Home</button>
       </div>
     </footer>
 

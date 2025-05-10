@@ -3,33 +3,107 @@ import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 import { manageFavorites, renderFavorites } from './favorites.js';
 import { checkAuthentication } from './auth.js';
+import { templates } from './templates.js';
 
 
 
 
-const searchForm = document.querySelector('.js-form');
-const searchResultDivObj = document.querySelector('.js-search-results');
-const projectContainer  = document.querySelector('.js-container');
+
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 
 let userSearchQuery = '';
 
+
+document.body.addEventListener('click', (event) => {
+  const page = event.target.getAttribute('data-page');
+  if (page) {
+    renderPage(page);
+  }
+});
+
 checkAuthentication();
-renderSearchResults();
-renderFavorites();
+renderPage('home');
 
 
+function renderPage(page) {
+  const app = document.getElementById('app');
+  app.innerHTML = templates[page];
 
-function renderSearchResults() {
-  searchForm.addEventListener('submit', (event) => {
+  // Call specific functions for each page
+  if (page === 'home') {
+    renderSearchResults();
+  } else if (page === 'favorites') {
+    renderFavorites();
+  } else if (page === 'login') {
+    setupLogin();
+  } else if (page === 'register') {
+    setupRegister();
+  }
+}
+
+function setupLogin() {
+  document.getElementById('login-form').addEventListener('submit', async (event) => {
     event.preventDefault();
-    userSearchQuery = event.target.querySelector('input').value;
-    callAPI();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      renderPage('home'); // Redirect to home page
+    } else {
+      alert('Invalid username or password');
+    }
   });
 }
 
 
-async function callAPI() {
+function setupRegister() {
+  document.getElementById('register-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      alert('Registration successful! You can now log in.');
+      renderPage('login'); // Redirect to login page
+    } else {
+      const errorMessage = await response.text();
+      alert(`Registration failed: ${errorMessage}`);
+    }
+  });
+}
+
+
+
+
+function renderSearchResults() {
+  const searchForm = document.querySelector('.js-form');
+  const searchResultDivObj = document.querySelector('.js-search-results'); 
+  const projectContainer = document.querySelector('.js-container');
+
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    userSearchQuery = event.target.querySelector('input').value;
+    callAPI(userSearchQuery, searchResultDivObj, projectContainer);
+    console.log('Rendering search results...');
+  });
+}
+
+
+async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
   const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=8`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
@@ -39,13 +113,12 @@ async function callAPI() {
     title: capitalizeEveryWord(result.title)
   }));
 
-  const recipeDataArray = generateSearchResults(preProcessedSearchResults); //param is parsed query results array data
-
+  const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer); 
   manageFavorites(recipeDataArray);
   setupPopupContent(recipeDataArray);
 }
 
-function generateSearchResults(searchResults) { //create array of objects with relevant data
+function generateSearchResults(searchResults, searchResultDivObj, projectContainer) { //create array of objects with relevant data
   projectContainer.classList.remove('initial');
 
   const recipeDataArray = searchResults.map(result => { //generates an array object 
