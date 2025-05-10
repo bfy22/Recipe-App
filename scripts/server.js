@@ -7,11 +7,11 @@ const bcrypt = require('bcryptjs');
 const path = require('path'); // Import the path module
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 // Serve static files
-app.use(express.static(path.join(__dirname, '../'))); // Serve static files from the parent directory
+app.use(express.static(path.join(__dirname, '../'), { maxAge: 0 })); // Serve static files from the parent directory
 
 
 mongoose.connect('mongodb://localhost:27017/recipeApp')
@@ -20,26 +20,38 @@ mongoose.connect('mongodb://localhost:27017/recipeApp')
 
 
 const userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  favorites: Array,
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  favorites: { type: Array, default: [] },
 });
 
 const User = mongoose.model('User', userSchema);
 
 app.post('/register', async (req, res) => {
+  console.log('Raw request body:', req.body); // Debug log
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    console.error('Missing username or password'); // Debug log
+    return res.status(400).send('Username and password are required');
+  }
+
+  console.log('Parsed registration request:', { username, password }); // Debug log
 
   // Check if the username already exists
   const existingUser = await User.findOne({ username });
   if (existingUser) {
+    console.log('Username already exists:', username); // Debug log
     return res.status(400).send('Username already exists');
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  console.log('Hashed password:', hashedPassword); // Debug log
+
   const user = new User({ username, password: hashedPassword, favorites: [] });
   try {
     await user.save();
+    console.log('User saved to database:', user); // Debug log
     res.status(201).send('User registered');
   } catch (error) {
     console.error('Error registering user:', error);
@@ -74,7 +86,9 @@ app.post('/login', async (req, res) => {
 
 app.get('/test-db', async (req, res) => {
   try {
+    console.log('Fetching users from database...'); // Debug log
     const users = await User.find();
+    console.log('Users fetched:', users); // Debug log
     res.json(users);
   } catch (error) {
     console.error('Database connection error:', error);
