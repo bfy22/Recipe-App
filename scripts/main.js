@@ -4,11 +4,15 @@ import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 import { manageFavorites, renderFavorites } from './favorites.js';
 import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';
+import { setupRegister, setupLogin, setupLogout } from './userSession.js';
+
 
 
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
+
+renderPage('home');
 
 document.body.addEventListener('click', (event) => {
   const page = event.target.getAttribute('data-page');
@@ -18,18 +22,17 @@ document.body.addEventListener('click', (event) => {
 });
 
 
-renderPage('home');
-
-
 export function renderPage(page) {
   const app = document.getElementById('app');
   app.innerHTML = templates[page];
-
+ 
   // Call specific functions for each page
   if (page === 'home') {
     renderSearchResults();
+    setupLogout();
   } else if (page === 'favorites') {
     requireAuth(page, () => renderFavorites());
+    setupLogout();
   } else if (page === 'login') {
     setupLogin();
   } else if (page === 'register') {
@@ -37,50 +40,6 @@ export function renderPage(page) {
   }
 }
 
-function setupLogin() {
-  document.getElementById('login-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const response = await fetch('http://localhost:4000/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem('token', data.token);
-      renderPage('home'); // Redirect to home page
-    } else {
-      alert('Invalid username or password');
-    }
-  });
-}
-
-
-function setupRegister() {
-  document.getElementById('register-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const response = await fetch('http://localhost:4000/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (response.ok) {
-      alert('Registration successful! You can now log in.');
-      renderPage('login'); // Redirect to login page
-    } else {
-      const errorMessage = await response.text();
-      alert(`Registration failed: ${errorMessage}`);
-    }
-  });
-}
 
 
 
