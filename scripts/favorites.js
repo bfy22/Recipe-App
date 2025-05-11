@@ -1,4 +1,4 @@
-import { renderPage } from "./main";
+import { renderPage } from "./main.js";
 
 
 let favoriteRecipes = [];
@@ -48,7 +48,7 @@ export function manageFavorites(recipeDataArray) {
 
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to manage favorites');
+      alert('Please log in to manage your favorites.');
       renderPage('login');
       return;
     }

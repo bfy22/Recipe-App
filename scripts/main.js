@@ -2,7 +2,7 @@ import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
 import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 import { manageFavorites, renderFavorites } from './favorites.js';
-import { checkAuthentication } from './utils/authentication.js';
+import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';
 
 
@@ -17,7 +17,7 @@ document.body.addEventListener('click', (event) => {
   }
 });
 
-checkAuthentication();
+
 renderPage('home');
 
 
@@ -29,7 +29,7 @@ export function renderPage(page) {
   if (page === 'home') {
     renderSearchResults();
   } else if (page === 'favorites') {
-    renderFavorites();
+    requireAuth(page, () => renderFavorites());
   } else if (page === 'login') {
     setupLogin();
   } else if (page === 'register') {
