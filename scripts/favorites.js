@@ -31,6 +31,13 @@ export async function renderFavorites() {
       const favoritesHTML = favorites.map(recipe => `
         ${recipe.html}`).join('');
       favoritesDOM.innerHTML = favoritesHTML;
+
+      const heartIcons = favoritesDOM.querySelectorAll('ion-icon[data-item-id]');
+      heartIcons.forEach(icon => {
+        const recipeID = icon.getAttribute('data-item-id');
+        icon.setAttribute('name', 'heart');
+      });
+
       
     } else {
       const errorMessage = await response.text();

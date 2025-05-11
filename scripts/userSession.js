@@ -11,7 +11,7 @@ export function setupLogin() {
   const loginForm = document.getElementById('login-form');
   if (!loginForm) return;
 
-  if (isLoginListenerAttached) return; // Prevent multiple listeners
+  if (isLoginListenerAttached) return; 
   isLoginListenerAttached = true;
 
   loginForm.addEventListener('submit', async (event) => {
@@ -51,9 +51,16 @@ export function setupLogin() {
 
 
 
-export function setupLogout() {
+export function setupLogout(page) {
   const logoutButton = document.getElementById('logout-button');
   if (!logoutButton) return;
+
+  if(page === 'home' || page === 'favorites') {
+    logoutButton.style.display = 'block';
+  } else {
+    logoutButton.style.display = 'none';
+  }
+  
 
   if (isLogoutListenerAttached) return; 
   isLogoutListenerAttached = true;
@@ -62,7 +69,7 @@ export function setupLogout() {
     localStorage.removeItem('token'); 
     alert('You have been logged out.');
 
-    //resets flags and data to avoid issues from leftover state of previous sessions
+    
     isLoginListenerAttached = false;
     isLogoutListenerAttached = false;
     isRegisterListenerAttached = false;
