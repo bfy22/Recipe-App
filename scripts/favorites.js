@@ -1,7 +1,7 @@
 import { renderPage } from "./main.js";
 
 
-let favoriteRecipes = [];
+export let favoriteRecipes = [];
 
  
 export async function renderFavorites() {
@@ -12,6 +12,12 @@ export async function renderFavorites() {
     return;
   }
 
+  const favoritesDOM = document.querySelector('.js-favorites');
+  if (!favoritesDOM) {
+    console.warn('Favorites DOM element not found. Skipping renderFavorites.');
+    return;
+  }
+
   try {
     const response = await fetch('http://localhost:4000/favorites', {
       headers: { Authorization: token },
@@ -19,19 +25,20 @@ export async function renderFavorites() {
 
     if (response.ok) {
       const favorites = await response.json();
-      console.log('Fetched favorites:', favorites); // Debug log
-      const favoritesDOM = document.querySelector('.js-favorites');
+      console.log('Fetched favorites:', favorites);
+      favoriteRecipes = favorites;
+
       const favoritesHTML = favorites.map(recipe => `
         ${recipe.html}`).join('');
       favoritesDOM.innerHTML = favoritesHTML;
       
     } else {
       const errorMessage = await response.text();
-      console.error('Failed to fetch favorites:', errorMessage); // Debug log
+      console.error('Failed to fetch favorites:', errorMessage); 
       alert('Failed to fetch favorites');
     }
   } catch (error) {
-    console.error('Error fetching favorites:', error);
+    console.error('Error occured while fetching favorites:', error);
     alert('An error occurred while fetching favorites');
   }
 }
@@ -53,6 +60,10 @@ export function manageFavorites(recipeDataArray) {
       return;
     }
 
+    heartIcon.classList.add('bounce');
+    setTimeout(() => heartIcon.classList.remove('bounce'), 400);
+    
+
     const favIndex = favoriteRecipes.findIndex(favRecipe => favRecipe.id == recipeID);
 
     if (favIndex !== -1) {
@@ -67,8 +78,6 @@ export function manageFavorites(recipeDataArray) {
       await updateFavoritesOnServer(recipe, 'add', token); // Update server
     }
 
-    heartIcon.classList.add('bounce');
-    setTimeout(() => heartIcon.classList.remove('bounce'), 400);
     console.log(favoriteRecipes);
   });
 }

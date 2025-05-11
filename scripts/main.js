@@ -1,7 +1,7 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //icons
 import {setupPopupContent} from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
-import { manageFavorites, renderFavorites } from './favorites.js';
+import { manageFavorites, renderFavorites, favoriteRecipes } from './favorites.js';
 import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';
 import { setupRegister, setupLogin, setupLogout } from './userSession.js';
@@ -25,18 +25,21 @@ document.body.addEventListener('click', (event) => {
 export function renderPage(page) {
   const app = document.getElementById('app');
   app.innerHTML = templates[page];
- 
+  
   // Call specific functions for each page
   if (page === 'home') {
     renderSearchResults();
-    setupLogout();
+    setupLogout(page);
+    requireAuth(page, () => renderFavorites());
   } else if (page === 'favorites') {
     requireAuth(page, () => renderFavorites());
-    setupLogout();
+    setupLogout(page);
   } else if (page === 'login') {
     setupLogin();
+    setupLogout(page);
   } else if (page === 'register') {
     setupRegister();
+    setupLogout(page);
   }
 }
 
@@ -49,9 +52,30 @@ function renderSearchResults() {
   const searchResultDivObj = document.querySelector('.js-search-results'); 
   const projectContainer = document.querySelector('.js-container');
 
+  const savedSearchResults = sessionStorage.getItem('searchResults');
+  const savedUserSearchQuery = sessionStorage.getItem('userSearchQuery');
+
+  if (savedSearchResults) {
+    console.log('Loading search results from session storage...');
+    const parsedResults = JSON.parse(savedSearchResults);
+
+    const preProcessedSearchResults = parsedResults.map(result => ({
+      ...result,
+      title: capitalizeEveryWord(result.title),
+    }));
+
+    const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
+    manageFavorites(recipeDataArray);
+    setupPopupContent(recipeDataArray);
+  }
+
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     userSearchQuery = event.target.querySelector('input').value;
+
+    sessionStorage.removeItem('searchResults');
+    sessionStorage.removeItem('userSearchQuery');
+
     callAPI(userSearchQuery, searchResultDivObj, projectContainer);
     console.log('Rendering search results...');
   });
@@ -62,7 +86,9 @@ async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
   const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=8`
   const response = await fetch(baseURL);
   const fetchedData = await response.json(); /*json to obj method for fetches*/
-  
+
+  sessionStorage.setItem('searchResults', JSON.stringify(fetchedData.results));
+  sessionStorage.setItem('userSearchQuery', userSearchQuery); 
   
   const preProcessedSearchResults = fetchedData.results.map(result => ({ ... result,   //clone each object
     title: capitalizeEveryWord(result.title)
@@ -77,7 +103,9 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
   projectContainer.classList.remove('initial');
 
   const recipeDataArray = searchResults.map(result => { //generates an array object 
-    
+
+    const isFavorite = favoriteRecipes.some(favRecipe => favRecipe.id === result.id);
+    const heartIconName = isFavorite ? 'heart' : 'heart-outline'; 
 
     return {
       title: result.title,
@@ -93,7 +121,7 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
       html: `
         <div class="item">
           <img src="${result.image}" alt=""> 
-          <button class="favorite-button js-favorite-button"><ion-icon name="heart-outline" data-item-id=${result.id}></ion-icon></button>
+          <button class="favorite-button js-favorite-button"><ion-icon name="${heartIconName}" data-item-id=${result.id}></ion-icon></button>
           <div>
             <div class="flex-result-info">
               <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
