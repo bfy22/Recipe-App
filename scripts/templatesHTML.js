@@ -41,7 +41,7 @@ export const templates = {
   favorites: `
     <section>
       <div class="container js-container">
-        <h1 class="brand-name"><a class="brand-Url" href="#">Favorites</a></h1>
+        <h1 class="brand-name"><a class="brand-Url" href="">Favorites</a></h1>
         <div class="favorites js-favorites"></div>
       </div>
     </section>

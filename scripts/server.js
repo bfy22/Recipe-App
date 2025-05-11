@@ -126,20 +126,37 @@ app.get('/favorites', authenticateToken, async (req, res) => {
 
 
 app.post('/favorites', authenticateToken, async (req, res) => {
-  const { recipe } = req.body;
+  const { recipe, action } = req.body; // Get the recipe and action from the request body
   try {
     const user = await User.findOne({ username: req.user.username });
     if (!user) {
       console.error('User not found:', req.user.username); // Debug log
       return res.status(404).send('User not found');
     }
-    user.favorites.push(recipe);
+
+    if (action === 'add') {
+      // Add the recipe to favorites if it's not already there
+      const exists = user.favorites.some(fav => fav.id === recipe.id);
+      if (!exists) {
+        user.favorites.push(recipe);
+        console.log('Recipe added to favorites:', recipe); // Debug log
+      }
+    } else if (action === 'remove') {
+      // Remove the recipe from favorites
+      user.favorites = user.favorites.filter(fav => fav.id !== recipe.id);
+
+      console.log('Recipe removed from favorites:', recipe); // Debug log
+    } else {
+      return res.status(400).send('Invalid action');
+    }
+
     await user.save();
     console.log('Updated favorites:', user.favorites); // Debug log
-    res.status(200).send('Recipe added to favorites');
+    res.status(200).send('Favorites updated');
+    
   } catch (error) {
-    console.error('Error saving favorite:', error);
-    res.status(500).send('Error saving favorite');
+    console.error('Error updating favorites:', error);
+    res.status(500).send('Error updating favorites');
   }
 });
 

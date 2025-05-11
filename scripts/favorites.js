@@ -77,13 +77,15 @@ export function manageFavorites(recipeDataArray) {
       favoriteRecipes.splice(favIndex, 1);
       heartIcon.setAttribute('name', 'heart-outline');
       await updateFavoritesOnServer(recipe, 'remove', token); 
+  
     } else {
       
       favoriteRecipes.push(recipe);
       heartIcon.setAttribute('name', 'heart');
       await updateFavoritesOnServer(recipe, 'add', token); 
+      
     }
-
+  renderFavorites();
     console.log(favoriteRecipes);
   });
 }
@@ -109,4 +111,6 @@ async function updateFavoritesOnServer(recipe, action, token) {
     console.error('Error updating favorites on server:', error);
     alert('An error occurred while updating favorites');
   }
+
+  
 }
