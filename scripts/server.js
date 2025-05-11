@@ -144,8 +144,15 @@ app.post('/favorites', authenticateToken, async (req, res) => {
 });
 
 // Catch-all route to ensure all requests serve index.html for SPA
-app.get('*', (req, res) => {
+/*app.get('*', (req, res) => {
+  console.log(`Catch-all route triggered for path: ${req.path}`); // Debug log
   res.sendFile(path.join(__dirname, '../index.html'));
+});*/
+
+//log all incoming requests for debugging
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.path}`);
+  next();
 });
 
 

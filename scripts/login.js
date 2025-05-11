@@ -1,3 +1,5 @@
+import { renderPage } from "./main.js";
+
 document.getElementById('login-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   const username = document.getElementById('username').value;
@@ -12,7 +14,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
   if (response.ok) {
     const data = await response.json();
     localStorage.setItem('token', data.token);
-    window.location.href = 'index.html'; // Redirect to the homepage
+    renderPage('home'); // Redirect to the homepage
   } else {
     alert('Invalid username or password');
   }
