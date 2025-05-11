@@ -25,12 +25,26 @@ export function setupLogin() {
       body: JSON.stringify({ username, password }),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem('token', data.token);
-      renderPage('home'); // Redirect to home page
-    } else {
-      alert('Invalid username or password');
+    try {
+      const response = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token); 
+        // Delay rendering the home page to ensure the token is stored
+        setTimeout(() => {
+          renderPage('home');
+        }, 0);
+      } else {
+        alert('Invalid username or password');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('An error occurred during login');
     }
   });
 }
@@ -47,7 +61,14 @@ export function setupLogout() {
   logoutButton.addEventListener('click', () => {
     localStorage.removeItem('token'); 
     alert('You have been logged out.');
-    renderPage('login'); 
+
+    //resets flags to avoid issues from leftover state of previous sessions
+    isLoginListenerAttached = false;
+    isRegisterListenerAttached = false;
+
+    setTimeout(() => {
+      renderPage('login');
+    }, 0);
   });
 }
 

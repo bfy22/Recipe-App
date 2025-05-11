@@ -3,9 +3,12 @@ import { renderPage } from "../main.js";
 export function requireAuth(page, callback) {
   const token = localStorage.getItem('token');
   if (!token) {
-    alert('Please log in to access this page');
+    
+    alert(`Access denied to page "${page}". Redirecting to login.`);
     renderPage('login');
-  } else {
-    callback(page);
+    return;
   }
+
+  console.log(`Access granted to page "${page}".`); // Debug log
+  callback();
 }
