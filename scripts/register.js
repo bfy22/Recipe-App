@@ -1,3 +1,5 @@
+import { renderPage } from "./main.js";
+
 document.getElementById('register-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   const username = document.getElementById('username').value;
@@ -14,7 +16,9 @@ document.getElementById('register-form').addEventListener('submit', async (event
 
     if (response.ok) {
       alert('Registration successful! You can now log in.');
-      window.location.href = 'login.html'; // Redirect to login page
+      // Redirect to login pag
+      renderPage('login');
+      window.location.href = 'index.html'; 
     } else {
       const errorMessage = await response.text();
       console.error('Registration failed:', errorMessage); // Debug log

@@ -32,26 +32,26 @@ app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    console.error('Missing username or password'); // Debug log
+    
     return res.status(400).send('Username and password are required');
   }
 
-  console.log('Parsed registration request:', { username, password }); // Debug log
+  console.log('Parsed registration request:', { username, password }); 
 
   // Check if the username already exists
   const existingUser = await User.findOne({ username });
   if (existingUser) {
-    console.log('Username already exists:', username); // Debug log
+    
     return res.status(400).send('Username already exists');
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log('Hashed password:', hashedPassword); // Debug log
+
 
   const user = new User({ username, password: hashedPassword, favorites: [] });
   try {
     await user.save();
-    console.log('User saved to database:', user); // Debug log
+    console.log('User saved to database:', user);
     res.status(201).send('User registered');
   } catch (error) {
     console.error('Error registering user:', error);
@@ -141,6 +141,11 @@ app.post('/favorites', authenticateToken, async (req, res) => {
     console.error('Error saving favorite:', error);
     res.status(500).send('Error saving favorite');
   }
+});
+
+// Catch-all route to ensure all requests serve index.html for SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 

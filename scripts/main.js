@@ -21,7 +21,7 @@ checkAuthentication();
 renderPage('home');
 
 
-function renderPage(page) {
+export function renderPage(page) {
   const app = document.getElementById('app');
   app.innerHTML = templates[page];
 

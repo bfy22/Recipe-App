@@ -3,6 +3,7 @@ export const templates = {
   home: `
     <section>
       <div class="container initial js-container">
+        <h1 class="brand-name"><a class="brand-Url" href="#">Recipe Matrix</a></h1>
         <form class="js-form">
           <input type="text" placeholder="Search Recipe...">
           <ion-icon name="search-outline"></ion-icon>
@@ -40,7 +41,7 @@ export const templates = {
   favorites: `
     <section>
       <div class="container js-container">
-        <h1>Favorites</h1>
+        <h1 class="brand-name"><a class="brand-Url" href="#">Favorites</a></h1>
         <div class="favorites js-favorites"></div>
       </div>
     </section>

@@ -7,7 +7,7 @@ export async function renderFavorites() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Please log in to view your favorites');
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
     return;
   }
 
@@ -48,7 +48,7 @@ export function manageFavorites(recipeDataArray) {
     const token = localStorage.getItem('token');
     if (!token) {
       alert('Please log in to manage favorites');
-      window.location.href = 'login.html';
+      window.location.href = 'index.html';
       return;
     }
 
