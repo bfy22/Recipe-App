@@ -25,15 +25,22 @@ document.body.addEventListener('click', (event) => {
 export function renderPage(page) {
   const app = document.getElementById('app');
   app.innerHTML = templates[page];
-  
-  // Call specific functions for each page
+
   if (page === 'home') {
-    renderSearchResults();
-    setupLogout(page);
-    requireAuth(page, () => renderFavorites());
+    const token = localStorage.getItem('token');
+    if (token) {
+      renderSearchResults();
+      setupLogout(page);
+      renderFavorites();
+    } else {
+      alert('Please log in to access this page.');
+      renderPage('login');
+    }
   } else if (page === 'favorites') {
-    requireAuth(page, () => renderFavorites());
-    setupLogout(page);
+    requireAuth(page, () => {
+      renderFavorites();
+      setupLogout(page);
+    });
   } else if (page === 'login') {
     setupLogin();
     setupLogout(page);
@@ -42,8 +49,6 @@ export function renderPage(page) {
     setupLogout(page);
   }
 }
-
-
 
 
 
@@ -103,7 +108,6 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
   projectContainer.classList.remove('initial');
 
   const recipeDataArray = searchResults.map(result => { //generates an array object 
-
     const isFavorite = favoriteRecipes.some(favRecipe => favRecipe.id === result.id);
     const heartIconName = isFavorite ? 'heart' : 'heart-outline'; 
 

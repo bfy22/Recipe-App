@@ -62,9 +62,13 @@ export function setupLogout() {
     localStorage.removeItem('token'); 
     alert('You have been logged out.');
 
-    //resets flags to avoid issues from leftover state of previous sessions
+    //resets flags and data to avoid issues from leftover state of previous sessions
     isLoginListenerAttached = false;
+    isLogoutListenerAttached = false;
     isRegisterListenerAttached = false;
+
+    sessionStorage.removeItem('searchResults');
+    sessionStorage.removeItem('userSearchQuery');
 
     setTimeout(() => {
       renderPage('login');
@@ -89,15 +93,32 @@ export function setupRegister() {
     console.log('Submitting registration:', { username, password }); // Debug log
   
     try {
-      const response = await fetch('http://localhost:4000/register', {
+      const registerResponse = await fetch('http://localhost:4000/register', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ username, password }),
       });
   
-      if (response.ok) {
-        alert('Registration successful! You can now log in.');
-        renderPage('login');
+      if (registerResponse.ok) {
+        alert('Registration successful! Logging you in...');
+        
+        const loginResponse = await fetch('http://localhost:4000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+
+        if (loginResponse.ok) {
+          const data = await loginResponse.json();
+          localStorage.setItem('token', data.token);
+          console.log('Login successful, token stored:', data.token); 
+
+         
+          renderPage('home');
+        } else {
+          alert('Registration successful, but login failed. Please log in manually.');
+          renderPage('login');
+        }
         
       } else {
         const errorMessage = await response.text();

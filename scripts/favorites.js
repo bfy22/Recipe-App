@@ -76,12 +76,12 @@ export function manageFavorites(recipeDataArray) {
       
       favoriteRecipes.splice(favIndex, 1);
       heartIcon.setAttribute('name', 'heart-outline');
-      await updateFavoritesOnServer(recipe, 'remove', token); // Update server
+      await updateFavoritesOnServer(recipe, 'remove', token); 
     } else {
       
       favoriteRecipes.push(recipe);
       heartIcon.setAttribute('name', 'heart');
-      await updateFavoritesOnServer(recipe, 'add', token); // Update server
+      await updateFavoritesOnServer(recipe, 'add', token); 
     }
 
     console.log(favoriteRecipes);
