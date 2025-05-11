@@ -43,7 +43,13 @@ export async function renderFavorites() {
   }
 }
 
+
+let isFavoritesListenerAttached = false;
+
 export function manageFavorites(recipeDataArray) {
+  if (isFavoritesListenerAttached) return; 
+  isFavoritesListenerAttached = true;
+
   document.body.addEventListener('click', async (event) => {
     const favoriteButton = event.target.closest('.js-favorite-button');
     if (!favoriteButton) return;

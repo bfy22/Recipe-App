@@ -1,7 +1,20 @@
 import { renderPage } from "./main.js";
 
+//attahces a flag for each function to prevent multiple event listeners
+let isLoginListenerAttached = false;
+let isLogoutListenerAttached = false;
+let isRegisterListenerAttached = false;
+
+
+
 export function setupLogin() {
-  document.getElementById('login-form').addEventListener('submit', async (event) => {
+  const loginForm = document.getElementById('login-form');
+  if (!loginForm) return;
+
+  if (isLoginListenerAttached) return; // Prevent multiple listeners
+  isLoginListenerAttached = true;
+
+  loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -22,22 +35,32 @@ export function setupLogin() {
   });
 }
 
-// Call this function during app initialization or when rendering the header
+
 
 export function setupLogout() {
   const logoutButton = document.getElementById('logout-button');
-  if (logoutButton) {
-    logoutButton.addEventListener('click', () => {
-      localStorage.removeItem('token'); // Clear the authentication token
-      alert('You have been logged out.');
-      renderPage('login'); // Redirect to the login page
-    });
-  }
+  if (!logoutButton) return;
+
+  if (isLogoutListenerAttached) return; 
+  isLogoutListenerAttached = true;
+
+  logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('token'); 
+    alert('You have been logged out.');
+    renderPage('login'); 
+  });
 }
 
 
+
 export function setupRegister() {
-  document.getElementById('register-form').addEventListener('submit', async (event) => {
+  const registerForm = document.getElementById('register-form');
+  if (!registerForm) return;
+
+  if (isRegisterListenerAttached) return; 
+  isRegisterListenerAttached = true;
+
+  registerForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -53,8 +76,8 @@ export function setupRegister() {
   
       if (response.ok) {
         alert('Registration successful! You can now log in.');
-        // Redirect to login pag
         renderPage('login');
+        
       } else {
         const errorMessage = await response.text();
         console.error('Registration failed:', errorMessage); // Debug log
