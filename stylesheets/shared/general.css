@@ -18,3 +18,8 @@ html {
   font-family: 'Roboto';
   font-size: 13px;
 }
+
+header {
+  position:relative;
+  top: 0;
+}

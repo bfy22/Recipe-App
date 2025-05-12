@@ -1,9 +1,9 @@
 .popup {
   position: fixed;
   font-size: 16px;
-  top: 50%;
+  top: 49%;
   left: 50%; /*centers the left corner of the popup*/
-  transform: translate(-50%, -50%) scale(0); /*value corresponds w.r.t the size of the container, scale is size manip*/
+  transform: translate(-50%, -50% ) scale(0); 
   border: 2px solid black;
   background-color: white;
   border-radius: 10px;

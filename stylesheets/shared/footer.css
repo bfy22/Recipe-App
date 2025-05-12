@@ -5,15 +5,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  
+  border-top: 1px solid black;
 }
 
-.footer .home-bar {
+.footer .home-bar, .favorites-bar {
+  border: none;
   flex: 1;
   cursor: pointer;
 }
 
-.footer .favorites-bar {
-  flex: 1;
-  cursor: pointer;
-}

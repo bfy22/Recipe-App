@@ -4,12 +4,14 @@
   display: grid;
   grid-gap: 30px;
   grid-template: auto / repeat(auto-fit, minmax(320px, 1fr)); 
+  justify-items :center;
   
 }
 
 .item {
   width: 100%;
   height: 100%;
+  max-width: 900px;
   border-radius: 8px;
   background-color: rgb(230, 230, 230);
   padding: 15px;
