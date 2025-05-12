@@ -24,6 +24,9 @@ export function setupPopupContent(recipeDataArray) {
         const dairyFree = recipeData.dairyFree ? 'Dairy Free' : '';
         document.querySelector('.popup-header .dairyFree').innerHTML = dairyFree;
 
+        const glutenFree = recipeData.glutenFree ? 'Gluten Free' : 'Recipe';
+        document.querySelector('.popup-header .title').innerHTML = glutenFree;
+
         document.querySelector('.popup-header .cookingTime').innerHTML = `${recipeData.cookingTimeMins} mins`;
 
         const popupBody = document.querySelector('#popup .popup-body');
