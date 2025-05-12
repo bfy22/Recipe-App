@@ -14,7 +14,7 @@ export const templates = {
   `,
   login: `
     <section>
-      <div class="container">
+      <div class="container session">
         <h1>Login</h1>
         <form id="login-form" action="javascript:void(0);">
           <input type="text" id="username" placeholder="Username" required>
@@ -27,7 +27,7 @@ export const templates = {
   `,
   register: `
     <section>
-      <div class="container">
+      <div class="container session">
         <h1>Register</h1>
         <form id="register-form">
           <input type="text" id="username" placeholder="Username" required>

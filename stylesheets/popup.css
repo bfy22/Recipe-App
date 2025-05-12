@@ -1,9 +1,9 @@
 .popup {
   position: fixed;
   font-size: 16px;
-  top: 49%;
+  top: 50%;
   left: 50%; /*centers the left corner of the popup*/
-  transform: translate(-50%, -50% ) scale(0); 
+  transform: translate(-50%, -55%) scale(0); 
   border: 2px solid #49B618;
   background-color: #2a2a2a;
   color: white;
@@ -18,7 +18,7 @@
 }
 
 .popup.active {
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -55%) scale(1);
 }
 
 .popup-header {
