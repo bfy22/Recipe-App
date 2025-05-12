@@ -78,18 +78,13 @@ function renderSearchResults() {
   //so search results remain in the user's session
   if (savedSearchResults) {
     console.log('Loading search results from session storage...');
-    const parsedResults = JSON.parse(savedSearchResults);
-
-    const preProcessedSearchResults = parsedResults.map(result => ({
-      ...result,
-      title: capitalizeEveryWord(result.title),
-    }));
+    const preProcessedSearchResults = JSON.parse(savedSearchResults);
 
     const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
     manageFavorites(recipeDataArray);
     setupPopupContent(recipeDataArray);
   }
-
+  //execute the API call at event
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     userSearchQuery = event.target.querySelector('input').value;
@@ -101,25 +96,25 @@ function renderSearchResults() {
   });
 }
 
+//handles API response, then pushes preprocessed data to software features
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
   const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=12`; //&offset=0&sort=popularity&sortDirection=desc`
   const response = await fetch(baseURL);
   const fetchedData = await response.json();
-
-  sessionStorage.setItem('searchResults', JSON.stringify(fetchedData.results));
-  sessionStorage.setItem('userSearchQuery', userSearchQuery);
 
   const preProcessedSearchResults = fetchedData.results.map(result => ({
     ...result,
     title: capitalizeEveryWord(result.title)
   }));
 
+  sessionStorage.setItem('searchResults', JSON.stringify(preProcessedSearchResults));
+
   const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
   manageFavorites(recipeDataArray);
   setupPopupContent(recipeDataArray);
 }
 
-
+//renders generated recipe data and provides them for software features
 function generateSearchResults(searchResults, searchResultDivObj, projectContainer) {
   projectContainer.classList.remove('initial');
 

@@ -51,7 +51,7 @@ export async function renderFavorites() {
 }
 
 
-let isFavoritesListenerAttached = false;
+let isFavoritesListenerAttached = false; //flag to prevent multiple listeners
 
 export function manageFavorites(recipeDataArray) {
   if (isFavoritesListenerAttached) return; 
@@ -59,8 +59,7 @@ export function manageFavorites(recipeDataArray) {
 
   document.body.addEventListener('click', async (event) => {
     const favoriteButton = event.target.closest('.js-favorite-button');
-    if (!favoriteButton) return;
-
+    
     const heartIcon = favoriteButton.querySelector('ion-icon');
     const recipeID = favoriteButton.querySelector('ion-icon').getAttribute('data-item-id');
     const recipe = recipeDataArray.find(recipe => recipe.id == recipeID);

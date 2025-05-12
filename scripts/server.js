@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const path = require('path'); // Import the path module for cross-compatibility
+const path = require('path'); // Import the path module for cross-compatibility and filepath error prevention
 
 const app = express();
 app.use(express.json());
