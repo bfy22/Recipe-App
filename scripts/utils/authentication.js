@@ -1,4 +1,5 @@
 import { renderPage } from "../main.js";
+
 //gatekeeps a function (callback) using the token as approval
 export function requireAuth(page, callback) {
   const token = localStorage.getItem('token');
