@@ -19,7 +19,7 @@
   letter-spacing: 1px;
 }
 
-form input {
+#login-form input, #register-form input {
   width: 100%;
   font-size: 16px;
   padding: 14px 12px;
@@ -32,14 +32,14 @@ form input {
 }
 
 
-form input:focus {
+#login-form input:focus, #register-form input:focus {
   border-color: #49B618;
   outline: none;
   box-shadow: 0 0 0 2px rgba(73, 182, 24, 1);
 }
 
 
-form button[type="submit"] {
+#login-form button[type="submit"], #register-form button[type="submit"] {
   background-color: #49B618;
   color: white;
   border: none;
@@ -53,7 +53,7 @@ form button[type="submit"] {
   will-change: transform;
 }
 
-form button[type="submit"]:hover {
+#login-form button[type="submit"]:hover, #register-form button[type="submit"]:hover {
   background-color: #009200;
   transform: translateY(-1px) scale(1.02);
   box-shadow: 0 0px 0px rgba(73, 182, 24, 0.5);

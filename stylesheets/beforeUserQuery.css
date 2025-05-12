@@ -11,12 +11,6 @@
   font-size: 27px
 }
 
-.container.initial form ion-icon{
-  margin-bottom: 15px;
-  margin-left: -60px;
-  height: 5vh;
-  font-size: 3rem;
-}
 
 @media (max-width: 768px) {
   .search-results {
@@ -32,19 +26,7 @@
     padding: 10px;
     font-size: 18px;
   }
-  .container.initial form ion-icon{
-    margin-bottom: 5px;
-    height: 3.5vh;
-    clip-path: rect(0 80% 91% 19%);
-  }
-}
-
-@media (max-width: 480px) {
-  .container.initial form ion-icon{
-    margin-bottom: 5px;
-    height: 3.5vh;
-    clip-path: rect(0 93% 86% 10%);
-  }
+  
 }
 
 

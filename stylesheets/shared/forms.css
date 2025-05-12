@@ -18,23 +18,21 @@ section {
 }
 
 .search-form {
-  width: 100%;
-  max-width: 400px;
   position: relative;
+  max-width: 400px;
   margin: 20px auto;
-  border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  width: 100%;
 }
 
 .search-form input {
   width: 100%;
   font-size: 16px;
-  padding: 14px 48px 14px 16px;
+  padding: 14px 50px 14px 16px; /* right padding for icon */
   border: none;
   border-radius: 30px;
   background-color: #1E1E1E;
   color: white;
-  transition: border-color 0.3s, background-color 0.3s;
+  transition: box-shadow 0.3s ease;
 }
 
 .search-form input:focus {
@@ -42,36 +40,47 @@ section {
   box-shadow: 0 0 0 2px rgba(70, 199, 11, 1);
 }
 
+/* Icon Button Positioned Cleanly */
 .search-form .icon-button {
   position: absolute;
   top: 50%;
-  right: 14px;
+  right: 20px;
   transform: translateY(-50%);
   background: none;
   border: none;
   padding: 0;
   margin: 0;
-  height: 24px;
-  width: 24px;
+  
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 
-.search-form .search-icon {
+
+
+
+.search-form .icon-button ion-icon {
   font-size: 20px;
+  width: 4vh;
+  height: 4vh;
   color: #49B618;
-  transition: transform 0.2s, color 0.3s, top 0s;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.search-form .search-icon:hover {
+@media (min-width: 768px) {
+  .search-form .icon-button ion-icon {
+    width: 6vh;
+    height: 6vh;
+  }
+}
+
+
+/* Hover and active feedback */
+.search-form .icon-button:hover ion-icon {
   color: #009200;
-  transform: translateY(-50%);
-  top: 50%;
-  
 }
 
-.search-form .search-icon:active {
-  animation: bounce 0.3s ease-in-out;
+.search-form .icon-button:active ion-icon {
+  transform: scale(1.2);
 }

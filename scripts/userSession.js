@@ -1,4 +1,5 @@
 import { renderPage } from "./main.js";
+import { showCustomAlert } from "./utils/customAlert.js";
 
 //attahces a flag for each function to prevent multiple event listeners
 let isLoginListenerAttached = false;
@@ -37,9 +38,10 @@ export function setupLogin() {
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('token', data.token);
-          console.log('Login successful, token stored:', data.token);
-
+          
           const redirectPage = sessionStorage.getItem('redirectAfterLogin');
+          showCustomAlert('Login successful!');
+
           if (redirectPage) {
             sessionStorage.removeItem('redirectAfterLogin');
             renderPage(redirectPage);
@@ -47,11 +49,11 @@ export function setupLogin() {
             renderPage('home');
           }
         } else {
-          alert('Invalid username or password');
+          showCustomAlert('Invalid username or password');
         }
       } catch (error) {
         console.error('Error during login:', error);
-        alert('An error occurred during login');
+        showCustomAlert('An error occurred during login');
       }
     });
   });
@@ -59,9 +61,8 @@ export function setupLogin() {
 
 export function setupRegister() {
   const registerForm = document.getElementById('register-form');
-  if (!registerForm) return;
+  if (!registerForm || isRegisterListenerAttached) return;
 
-  if (isRegisterListenerAttached) return; 
   isRegisterListenerAttached = true;
 
   registerForm.addEventListener('submit', async (event) => {
@@ -79,7 +80,7 @@ export function setupRegister() {
       });
   
       if (registerResponse.ok) {
-        alert('Registration successful! Logging you in...');
+        showCustomAlert('Registration successful! Logging you in...');
         
         const loginResponse = await fetch('http://localhost:4000/login', {
           method: 'POST',
@@ -90,23 +91,23 @@ export function setupRegister() {
         if (loginResponse.ok) {
           const data = await loginResponse.json();
           localStorage.setItem('token', data.token);
-          //console.log('Login successful, token stored:', data.token); 
-
-         
-          renderPage('home');
+          //console.log('Login successful, token stored:', data.token);
+          setTimeout(() => {
+            renderPage('home');
+          }, 1200);
         } else {
-          alert('Registration successful, but login failed. Please log in manually.');
+          showCustomAlert('Registration successful, but login failed. Please log in manually.');
           renderPage('login');
         }
         
       } else {
         const errorMessage = await response.text();
         console.error('Registration failed:', errorMessage);
-        alert(`Registration failed: ${errorMessage}`);
+        showCustomAlert(`Registration failed: ${errorMessage}`);
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      alert('An error occurred during registration');
+      showCustomAlert('An error occurred during registration.');
     }
   });
 }
@@ -129,7 +130,7 @@ export function setupLogout(page) {
 
   logoutButton.addEventListener('click', () => {
     localStorage.removeItem('token'); 
-    alert('You have been logged out.');
+    showCustomAlert('You have been logged out.');
 
     
     isLoginListenerAttached = false;
