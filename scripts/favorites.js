@@ -25,7 +25,7 @@ export async function renderFavorites() {
 
     if (response.ok) {
       const favorites = await response.json();
-      console.log('Fetched favorites:', favorites);
+      //console.log('Fetched favorites:', favorites);
       favoriteRecipes = favorites;
 
       const favoritesHTML = favorites.map(recipe => `
@@ -92,8 +92,9 @@ export function manageFavorites(recipeDataArray) {
       await updateFavoritesOnServer(recipe, 'add', token); 
       
     }
+
   renderFavorites();
-    console.log(favoriteRecipes);
+    
   });
 }
 
@@ -118,6 +119,5 @@ async function updateFavoritesOnServer(recipe, action, token) {
     console.error('Error updating favorites on server:', error);
     alert('An error occurred while updating favorites');
   }
-
   
 }

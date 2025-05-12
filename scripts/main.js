@@ -1,11 +1,10 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //icons
-import {setupPopupContent} from './popup.js';
+import { setupPopupContent } from './popup.js';
 import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
 import { manageFavorites, renderFavorites, favoriteRecipes } from './favorites.js';
 import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';
 import { setupRegister, setupLogin, setupLogout } from './userSession.js';
-
 
 
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
@@ -14,33 +13,51 @@ let userSearchQuery = '';
 
 renderPage('home');
 
+//saves intent to redirect to footer options after login
 document.body.addEventListener('click', (event) => {
   const page = event.target.getAttribute('data-page');
-  if (page) {
+  if (!page) return;
+
+  const token = localStorage.getItem('token');
+  const protectedPages = ['favorites'];
+
+  if (protectedPages.includes(page) && !token) {
+    sessionStorage.setItem('redirectAfterLogin', page); // Save intent
+    renderPage('login');
+  } else {
     renderPage(page);
   }
 });
 
-
+//renders an HTML template to implement SPA architecture, using token as a key
 export function renderPage(page) {
+  console.log(`Rendering page: ${page}`);
   const app = document.getElementById('app');
   app.innerHTML = templates[page];
 
+  const token = localStorage.getItem('token');
+
   if (page === 'home') {
-    const token = localStorage.getItem('token');
     if (token) {
+      
       renderSearchResults();
       setupLogout(page);
       renderFavorites();
     } else {
-      alert('Please log in to access this page.');
+      console.warn('User not logged in. Redirecting to login page.');
       renderPage('login');
     }
   } else if (page === 'favorites') {
-    requireAuth(page, () => {
-      renderFavorites();
-      setupLogout(page);
-    });
+    if (token) {
+      console.log('Token found. Rendering favorites page.');
+      requireAuth(page, () => {
+        renderFavorites();
+        setupLogout(page);
+      });
+    } else {
+      console.warn('User not logged in. Redirecting to login page.');
+      renderPage('login');
+    }
   } else if (page === 'login') {
     setupLogin();
     setupLogout(page);
@@ -50,16 +67,15 @@ export function renderPage(page) {
   }
 }
 
-
-
+//the function that executes everything related to acquisition, general handling and rendering of data
 function renderSearchResults() {
   const searchForm = document.querySelector('.js-form');
-  const searchResultDivObj = document.querySelector('.js-search-results'); 
+  const searchResultDivObj = document.querySelector('.js-search-results');
   const projectContainer = document.querySelector('.js-container');
 
-  const savedSearchResults = sessionStorage.getItem('searchResults');
-  const savedUserSearchQuery = sessionStorage.getItem('userSearchQuery');
-
+  const savedSearchResults = sessionStorage.getItem('searchResults'); 
+  
+  //so search results remain in the user's session
   if (savedSearchResults) {
     console.log('Loading search results from session storage...');
     const parsedResults = JSON.parse(savedSearchResults);
@@ -79,42 +95,42 @@ function renderSearchResults() {
     userSearchQuery = event.target.querySelector('input').value;
 
     sessionStorage.removeItem('searchResults');
-    sessionStorage.removeItem('userSearchQuery');
 
     callAPI(userSearchQuery, searchResultDivObj, projectContainer);
     console.log('Rendering search results...');
   });
 }
 
-
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=8`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=12`; //&offset=0&sort=popularity&sortDirection=desc`
   const response = await fetch(baseURL);
-  const fetchedData = await response.json(); /*json to obj method for fetches*/
+  const fetchedData = await response.json();
 
   sessionStorage.setItem('searchResults', JSON.stringify(fetchedData.results));
-  sessionStorage.setItem('userSearchQuery', userSearchQuery); 
-  
-  const preProcessedSearchResults = fetchedData.results.map(result => ({ ... result,   //clone each object
+  sessionStorage.setItem('userSearchQuery', userSearchQuery);
+
+  const preProcessedSearchResults = fetchedData.results.map(result => ({
+    ...result,
     title: capitalizeEveryWord(result.title)
   }));
 
-  const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer); 
+  const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
   manageFavorites(recipeDataArray);
   setupPopupContent(recipeDataArray);
 }
 
-function generateSearchResults(searchResults, searchResultDivObj, projectContainer) { //create array of objects with relevant data
+
+function generateSearchResults(searchResults, searchResultDivObj, projectContainer) {
   projectContainer.classList.remove('initial');
 
-  const recipeDataArray = searchResults.map(result => { //generates an array object 
+  const recipeDataArray = searchResults.map(result => {
     const isFavorite = favoriteRecipes.some(favRecipe => favRecipe.id === result.id);
-    const heartIconName = isFavorite ? 'heart' : 'heart-outline'; 
+    const heartIconName = isFavorite ? 'heart' : 'heart-outline';
 
     return {
       title: result.title,
-      id: result.id,     
-      ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],  
+      id: result.id,
+      ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
       nutrition: result.nutrition.nutrients.map(item => `${item.name}: ${item.amount}${item.unit}`),
       cookingTimeMins: result.readyInMinutes,
@@ -138,14 +154,11 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
           </div>
         </div>
       `
-    }       
+    };
   });
-  
+
   const generatedResultsHTML = recipeDataArray.map(data => data.html).join('');
-  searchResultDivObj.innerHTML = generatedResultsHTML; 
-  
+  searchResultDivObj.innerHTML = generatedResultsHTML;
+
   return recipeDataArray;
 }
-
-
-

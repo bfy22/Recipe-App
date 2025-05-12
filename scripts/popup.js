@@ -17,6 +17,7 @@ export function setupPopupContent(recipeDataArray) {
 
 
       if(recipeData) {
+        //for each recipe, checks for correct diet info to display on popup-header
         const diet = (recipeData.vegan) ? 'Vegan' : (recipeData.vegetarian) ? 'Vegetarian' : '';
         document.querySelector('.popup-header .diet').innerHTML = diet;
 
@@ -44,7 +45,7 @@ export function setupPopupContent(recipeDataArray) {
   });
 }
 
-
+//to switch between popup styles that reveal or hide it
 function openPopup(popup) {
   if (popup) {
     popup.classList.add('active');

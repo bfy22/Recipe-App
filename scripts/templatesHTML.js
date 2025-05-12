@@ -1,4 +1,4 @@
-// Templates for different pages
+// Templates for different pages to be rendered to achieve SPA architecture
 export const templates = {
   home: `
     <section>
@@ -16,7 +16,7 @@ export const templates = {
     <section>
       <div class="container">
         <h1>Login</h1>
-        <form id="login-form">
+        <form id="login-form" action="javascript:void(0);">
           <input type="text" id="username" placeholder="Username" required>
           <input type="password" id="password" placeholder="Password" required>
           <button type="submit">Login</button>
@@ -40,7 +40,7 @@ export const templates = {
   `,
   favorites: `
     <section>
-      <div class="container js-container">
+      <div class="container initial js-container">
         <h1 class="brand-name"><a class="brand-Url" href="">Favorites</a></h1>
         <div class="favorites js-favorites"></div>
       </div>
