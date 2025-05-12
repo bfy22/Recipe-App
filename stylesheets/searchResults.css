@@ -6,6 +6,7 @@
   grid-template: auto / repeat(auto-fit, minmax(320px, 1fr)); 
   justify-items :center;
   
+  
 }
 
 .item {
@@ -13,14 +14,20 @@
   height: 100%;
   max-width: 900px;
   border-radius: 8px;
-  background-color: rgb(230, 230, 230);
+  background-color: #2a2a2a; /* Dark card background */
   padding: 15px;
   overflow: hidden;
   position: relative;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+.item:hover {
+  transform: translateY(-4px);
 }
 
 .item > div {
@@ -45,7 +52,7 @@ img {
   position: absolute;
   top: 25px;
   right: 25px;
-
+  background-color: rgb(50, 50, 50);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,7 +65,8 @@ img {
 
 .item ion-icon {
   font-size: 2rem;
-  color: red;
+  color: #49B618;
+  
   transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
@@ -93,28 +101,28 @@ img {
   margin-top: auto; 
 }
 
- .title {
+.item .title {
   margin: 0;
   padding: 0;
   font-size: 18px;
   font-weight: 500;
-
+  text-align: left;
 }
 
 .item .title-Url {
   text-decoration: none;
-  color: unset;
+  color: #FFFFFF;
 }
 
 .item .title-Url:hover {
   text-decoration: none;
-  color: revert;
+  color: #49B618;
 }
 
 
 .recipe-button, .steps-button, .nutrition-button {
-  color: black;
-  background-color: rgb(210, 210, 210);
+  color: #1E1E1E;
+  background-color: #49B618;
   font-size: 17px; 
   font-weight: 500;
 
@@ -129,12 +137,12 @@ img {
 
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.08);
 
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.3s, transform 0.2s ease;
   cursor: pointer;
 }
 
 .recipe-button:hover, .steps-button:hover, .nutrition-button:hover{
-  background-color: rgb(205, 205, 205);
+  background-color: #009200;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
   transform: scale(1.05);
 }

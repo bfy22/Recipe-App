@@ -1,20 +1,12 @@
-/*percentages, vh and auto for responsivesness*/
-
-
 .brand-name {
   font-size: 48px;
-  color: black;
-
-  margin-bottom: 30px;
+  color: #49B618;
+  margin: 30px 0;
   text-align: center;
 }
 
-.brand-Url {
-  text-decoration: none;
-  color: unset;
-}
 
-.brand-Url:hover {
-  text-decoration: none;
-  color: unset;
+.brand-name:hover  {
+  color: #009200;
+  cursor: pointer;
 }

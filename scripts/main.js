@@ -11,7 +11,10 @@ const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
 
 
+
+
 renderPage('home');
+
 
 //saves intent to redirect to footer options after login
 document.body.addEventListener('click', (event) => {
@@ -28,6 +31,20 @@ document.body.addEventListener('click', (event) => {
     renderPage(page);
   }
 });
+
+function refreshSearchPage() {
+  const brandName = document.querySelector('.js-brand-name');
+  if (!brandName) return;
+
+  brandName.addEventListener('click', () => {
+    const searchResultDivObj = document.querySelector('.js-search-results');
+    const container = document.querySelector('.js-container');
+
+    sessionStorage.removeItem('searchResults');
+    if (searchResultDivObj) searchResultDivObj.innerHTML = '';
+    if (container) container.classList.add('initial');
+  });
+}
 
 //renders an HTML template to implement SPA architecture, using token as a key
 export function renderPage(page) {
@@ -47,6 +64,8 @@ export function renderPage(page) {
       console.warn('User not logged in. Redirecting to login page.');
       renderPage('login');
     }
+    
+    refreshSearchPage();
   } else if (page === 'favorites') {
     if (token) {
       console.log('Token found. Rendering favorites page.');
@@ -94,6 +113,10 @@ function renderSearchResults() {
     callAPI(userSearchQuery, searchResultDivObj, projectContainer);
     console.log('Rendering search results...');
   });
+}
+
+function executeCall() {
+  
 }
 
 //handles API call & response, then pushes preprocessed data to software features

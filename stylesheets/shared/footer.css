@@ -5,12 +5,28 @@
   bottom: 0;
   left: 0;
   right: 0;
-  border-top: 1px solid black;
+  border-top: 2px solid #49B618;
+  background-color: #1E1E1E;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
 }
 
-.footer .home-bar, .favorites-bar {
+.footer button {
+  background: none;
   border: none;
-  flex: 1;
   cursor: pointer;
+  color: #49B618;
+  font-size: 24px;
+  transition: transform 0.2s ease, color 0.3s ease;
 }
 
+.footer button:hover {
+  transform: scale(1.2);
+  color: #009200;
+  text-shadow: 0 0 6px #49B618;
+}
+
+.footer ion-icon {
+  pointer-events: none;
+}

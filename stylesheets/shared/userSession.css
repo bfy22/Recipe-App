@@ -5,6 +5,19 @@
   text-align: center;
 }
 
+form input {
+  width: 100%;
+  font-size: 16px;
+  padding: 14px 12px;
+  margin: 10px 0;
+  border: 2px solid #49B618;
+  border-radius: 6px;
+  background-color: #1E1E1E;
+  color: white;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+
 form button[type="submit"] {
   background-color: #49B618;
   color: white;
@@ -23,8 +36,6 @@ form button[type="submit"]:hover {
   transform: scale(1.03);
 }
 
-
-
 .container p {
   text-align: center;
   margin-top: 10px;
@@ -33,10 +44,32 @@ form button[type="submit"]:hover {
 .container p button {
   background: none;
   border: none;
-  color: blue;
+  color: #49B618;
   text-decoration: underline;
   cursor: pointer;
   font-size: 14px;
   padding: 0;
+}
+
+.container p button:hover {
+  color: #009200;
+}
+
+.logout-button {
+  background-color: transparent;
+  color: #49B618;
+  border: 2px solid #49B618;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #49B618;
+  color: #1E1E1E;
+  border-color: #009200;
 }
 

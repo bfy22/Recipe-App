@@ -12,9 +12,10 @@
 }
 
 .container.initial form ion-icon{
-  margin-bottom: 10px;
-  height: 4vh;
-  clip-path: rect(0 72% 90% 10%);
+  margin-bottom: 15px;
+  margin-left: -60px;
+  height: 5vh;
+  font-size: 3rem;
 }
 
 @media (max-width: 768px) {
