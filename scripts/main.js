@@ -96,7 +96,7 @@ function renderSearchResults() {
   });
 }
 
-//handles API response, then pushes preprocessed data to software features
+//handles API call & response, then pushes preprocessed data to software features
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
   const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=12`; //&offset=0&sort=popularity&sortDirection=desc`
   const response = await fetch(baseURL);
@@ -152,8 +152,7 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
     };
   });
 
-  const generatedResultsHTML = recipeDataArray.map(data => data.html).join('');
-  searchResultDivObj.innerHTML = generatedResultsHTML;
+  searchResultDivObj.innerHTML = recipeDataArray.map(data => data.html).join('');
 
   return recipeDataArray;
 }

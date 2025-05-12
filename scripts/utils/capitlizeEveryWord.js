@@ -1,3 +1,4 @@
+//for the titles of the fetched recipes
 export function capitalizeEveryWord(string) {
   const excludeCases = ["and", "with"];
   const targetedWords = (string.toLowerCase()).split(' ');

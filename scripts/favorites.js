@@ -3,7 +3,7 @@ import { renderPage } from "./main.js";
 
 export let favoriteRecipes = [];
 
- 
+//fetches favorites from server endpoint with error handling and fills rendered buttons
 export async function renderFavorites() {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -53,13 +53,15 @@ export async function renderFavorites() {
 
 let isFavoritesListenerAttached = false; //flag to prevent multiple listeners
 
+//manages favorites list and button
 export function manageFavorites(recipeDataArray) {
   if (isFavoritesListenerAttached) return; 
   isFavoritesListenerAttached = true;
 
   document.body.addEventListener('click', async (event) => {
     const favoriteButton = event.target.closest('.js-favorite-button');
-    
+    if (!favoriteButton) return;
+
     const heartIcon = favoriteButton.querySelector('ion-icon');
     const recipeID = favoriteButton.querySelector('ion-icon').getAttribute('data-item-id');
     const recipe = recipeDataArray.find(recipe => recipe.id == recipeID);
