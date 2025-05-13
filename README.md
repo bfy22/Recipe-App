@@ -1,7 +1,7 @@
 # Recipe App
 ## Overview
 
-The Recipe App is a web application designed to help users manage their favorite recipes. It allows users to register, log in, and save their favorite recipes for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
+The Recipe App is a web application designed to help users manage their favorite recipes. It allows users to to search and save their favorite recipes in their account for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
 ## Features
 
 User Registration and Authentication: Users can create accounts and log in securely.
@@ -11,24 +11,21 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 
 ## Installation
 ### Requirements
-<ul>
-    Node.js 
-    MongoDB 
-</ul>
+
+- Node.js 
+- MongoDB 
+
 
 
 ### Steps to Install
-<li>
-    <ul>
-Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub.
 
-Navigate to the Cloned Repository: Move into the project directory.
+- Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub.
 
-Install Dependencies: Use "npm install" to install the necessary packages.
+- Navigate to the Cloned Repository: Move into the project directory.
+- Install Dependencies: Use "npm install" to install the necessary packages.
 
-Start the Application: Start the server by running the following command.
-</ul>
-</li>
+- Start the Application: Start the server by running the following command.
+
 
 
 
@@ -39,19 +36,17 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 ## Languages and Technologies Used
 ### Languages
 
-<ul>
-JavaScript
-CSS
-HTML
-</ul>
+- HTML
+- CSS
+- JavaScript
 
 ### Technologies/Dependencies
-<ul>
-Express: Fast and minimal web framework for Node.js.
-Mongoose: MongoDB object modeling for Node.js.
-MongoDB: NoSQL database for storing recipes and user data.
-bcryptjs: Library for hashing passwords securely.
-jsonwebtoken: Library for generating and verifying JSON Web Tokens (JWT).
-Body-Parser: Middleware for parsing incoming request bodies.
-CORS: Middleware to enable Cross-Origin Resource Sharing.
-</ul>
+
+- Express: Fast and minimal web framework for Node.js.
+- Mongoose: MongoDB object modeling for Node.js.
+- MongoDB: NoSQL database for storing recipes and user data.
+- bcryptjs: Library for hashing passwords securely.
+- jsonwebtoken: Library for generating and verifying JSON Web Tokens (JWT).
+- Body-Parser: Middleware for parsing incoming request bodies.
+- CORS: Middleware to enable Cross-Origin Resource Sharing.
+
