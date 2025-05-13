@@ -26,8 +26,8 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 - Install Dependencies: Use "npm install" to install the necessary packages.
 
 - Start the Application: Start the server by running the node command on the server.js file.
-
-`` # Clone the repository from GitHub
+```
+# Clone the repository from GitHub
 git clone https://github.com/bfy22/Recipe-App-Phase-2.git
 
 # Navigate to the cloned repository
@@ -38,7 +38,8 @@ npm install
 
 # Start the application server
 node scripts/server.js
-# The application will now be running. Open the provided link (e.g., http://localhost:3000) in your web browser. ``
+# The application will now be running. Open the provided link (e.g., http://localhost:3000) in your web browser.
+```
 
 
 ### Access the Web Application
