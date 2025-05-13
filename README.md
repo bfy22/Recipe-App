@@ -31,7 +31,7 @@ The Recipe App is a web application designed to help users manage their favorite
 git clone https://github.com/bfy22/Recipe-App.git
 
 # Navigate to the cloned repository
-cd Recipe-App-Phase-2
+cd Recipe-App
 
 # Install all the required dependencies using npm
 npm install
