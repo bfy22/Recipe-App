@@ -4,10 +4,10 @@
 The Recipe App is a web application designed to help users manage their favorite recipes. It allows users to to search and save their favorite recipes in their account for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
 ## Features
 
-User Registration and Authentication: Users can create accounts and log in securely.
-Recipe Management: Save and manage your favorite recipes.
-Search and Filter: Quickly find saved recipes.
-Simple and Intuitive UI: Easy-to-navigate web interface.
+- User Registration and Authentication: Users can create accounts and log in securely.
+- Recipe Management: Save and manage your favorite recipes.
+- Search and Filter: Quickly find saved recipes.
+- Simple and Intuitive UI: Easy-to-navigate web interface.
 
 ## Installation
 ### Requirements
