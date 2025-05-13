@@ -145,7 +145,7 @@ export function setupLogout(page) {
 
     setTimeout(() => {
       renderPage('login');
-    }, 0);
+    }, 1200);
   });
 }
 
