@@ -19,7 +19,7 @@ The Recipe App is a web application designed to help users manage their favorite
 
 ### Steps to Install
 - Install the latest and platform-compatible long-term support version of node.js
-- Install the latest MongoDB Community Edition with your preferred platform and installation method. In the Setup Wizard, choose Complete Setup Type, check all tickboxes and run as Network Service user. Then restart your device.
+- Install the latest MongoDB Community Edition with your preferred platform and installation method. In the Setup Wizard, choose Complete Setup Type, tick all checkboxes and run as Network Service user. Then restart your device.
 - Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub.
 
 - Navigate to the Cloned Repository: Move into the project directory.
