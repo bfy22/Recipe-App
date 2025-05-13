@@ -44,8 +44,8 @@ html {
 
 .custom-alert {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  left: 10px;
   background-color: #49B618;
   color: black;
   padding: 12px 20px;

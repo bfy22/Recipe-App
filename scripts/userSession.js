@@ -134,7 +134,7 @@ export function setupLogout(page) {
 
   logoutButton.addEventListener('click', () => {
     localStorage.removeItem('token'); 
-    showCustomAlert('You have been logged out.');
+    showCustomAlert('Logging you out...');
 
     
     isLoginListenerAttached = false;
