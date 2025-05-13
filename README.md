@@ -27,7 +27,18 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 
 - Start the Application: Start the server by running the node command on the server.js file.
 
+`# Clone the repository from GitHub
+git clone https://github.com/bfy22/Recipe-App-Phase-2.git
 
+# Navigate to the cloned repository
+cd Recipe-App-Phase-2
+
+# Install all the required dependencies using npm
+npm install
+
+# Start the application server
+node scripts/server.js
+# The application will now be running. Open the provided link (e.g., http://localhost:3000) in your web browser.`
 
 
 ### Access the Web Application
@@ -42,8 +53,9 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 - JavaScript
 
 ### Technologies/Dependencies
-
-- Express: Fast and minimal web framework for Node.js.
+- node.js: in vitro JavaSript runtime environment. Provides Path module
+- Path: provides unresetricted management and resolution of file paths 
+- Express: Fast and minimal web framework for Node.js. 
 - Mongoose: MongoDB object modeling for Node.js.
 - MongoDB: NoSQL database for storing recipes and user data.
 - bcryptjs: Library for hashing passwords securely.
