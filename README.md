@@ -19,7 +19,7 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 
 ### Steps to Install
 <li>
-Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the <Code> button on GitHub:
+Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub:
 
 Navigate to the Cloned Repository: Move into the project directory.
 
