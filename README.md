@@ -38,7 +38,7 @@ npm install
 
 # Start the application server
 node scripts/server.js
-# The application will now be running. Open the provided link (e.g., http://localhost:4000) in your web browser.
+
 ```
 
 
