@@ -1,7 +1,9 @@
 # Recipe App
+
 ## Overview
 
 The Recipe App is a web application designed to help users manage their favorite recipes. It allows users to to search and save their favorite recipes in their account for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
+
 ## Features
 
 - User Registration and Authentication: Users can create accounts and log in securely.
@@ -10,6 +12,7 @@ The Recipe App is a web application designed to help users manage their favorite
 - Simple and Intuitive UI: Easy-to-navigate web interface.
 
 ## Installation
+
 ### Requirements
 
 - <a href="https://nodejs.org/en/download">node.js</a>
@@ -18,6 +21,7 @@ The Recipe App is a web application designed to help users manage their favorite
 
 
 ### Steps to Install
+
 - Install the latest and platform-compatible long-term support version of node.js
 - Install the latest MongoDB Community Edition with your preferred platform and installation method. In the Setup Wizard, choose Complete Setup Type, tick all checkboxes and run as Network Service user. Then restart your device.
 - Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub.
@@ -54,6 +58,7 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 - JavaScript
 
 ### Technologies/Dependencies
+
 - node.js: in vitro JavaSript runtime environment. Provides Path module
 - Path: provides unresetricted management and resolution of file paths 
 - Express: Fast and minimal web framework for Node.js. 
