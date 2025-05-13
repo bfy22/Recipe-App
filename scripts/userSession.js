@@ -44,9 +44,13 @@ export function setupLogin() {
 
           if (redirectPage) {
             sessionStorage.removeItem('redirectAfterLogin');
-            renderPage(redirectPage);
+            setTimeout(() => {
+              renderPage(redirectPage);
+            }, 1200);
           } else {
-            renderPage('home');
+            setTimeout(() => {
+              renderPage('home');
+            }, 1200);
           }
         } else {
           showCustomAlert('Invalid username or password');
