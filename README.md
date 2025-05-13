@@ -19,13 +19,15 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 
 ### Steps to Install
 <li>
-Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub:
+    <ul>
+Clone the Repository: Open your terminal or code editor terminal and clone the repository using the link provided under the "<> Code" button on GitHub.
 
 Navigate to the Cloned Repository: Move into the project directory.
 
-Install Dependencies: Use "npm install" to install the necessary packages:
+Install Dependencies: Use "npm install" to install the necessary packages.
 
-Start the Application: Start the server by running the following command:
+Start the Application: Start the server by running the following command.
+</ul>
 </li>
 
 
