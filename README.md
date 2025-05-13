@@ -1,4 +1,4 @@
-# Recipe App - Phase 2
+# Recipe App
 ## Overview
 
 The Recipe App is a web application designed to help users manage their favorite recipes. It allows users to register, log in, and save their favorite recipes for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
