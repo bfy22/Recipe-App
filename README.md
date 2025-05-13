@@ -12,8 +12,8 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 ## Installation
 ### Requirements
 
-- Node.js 
-- MongoDB 
+- <a href="https://nodejs.org/en/download">node.js</a>
+- <a href="https://www.mongodb.com/try/download/community">MongoDB</a> 
 
 
 
@@ -24,7 +24,7 @@ Simple and Intuitive UI: Easy-to-navigate web interface.
 - Navigate to the Cloned Repository: Move into the project directory.
 - Install Dependencies: Use "npm install" to install the necessary packages.
 
-- Start the Application: Start the server by running the following command.
+- Start the Application: Start the server by running the node command on the server.js file.
 
 
 
