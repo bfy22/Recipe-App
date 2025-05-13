@@ -28,7 +28,7 @@ The Recipe App is a web application designed to help users manage their favorite
 - Start the Application: Start the server by running the node command on the server.js file.
 ```
 # Clone the repository from GitHub
-git clone https://github.com/bfy22/Recipe-App-Phase-2.git
+git clone https://github.com/bfy22/Recipe-App.git
 
 # Navigate to the cloned repository
 cd Recipe-App-Phase-2
