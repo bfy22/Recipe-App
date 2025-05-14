@@ -59,8 +59,8 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 
 ### Technologies/Dependencies
 
-- node.js: in vitro JavaSript runtime environment. Provides Path module
-- Path: provides unresetricted management and resolution of file paths 
+- node.js: in vitro JavaScript runtime environment. Provides Path module
+- Path: provides unrestricted management and resolution of file paths 
 - Express: Fast and minimal web framework for Node.js. 
 - Mongoose: MongoDB object modeling for Node.js.
 - MongoDB: NoSQL database for storing recipes and user data.
