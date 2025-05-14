@@ -6,7 +6,7 @@ import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';
 import { setupRegister, setupLogin, setupLogout } from './userSession.js';
 import { showCustomAlert } from './utils/customAlert.js';
-
+import { generateRecipeHTML } from './utils/renderHelper.js';
 
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
 let userSearchQuery = '';
@@ -102,7 +102,7 @@ function renderSearchResults() {
 
     const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
     manageFavorites(recipeDataArray);
-    setupPopupContent(recipeDataArray);
+    setupPopupContent();
   }
   //execute the API call at event
   searchForm.addEventListener('submit', (event) => {
@@ -118,7 +118,7 @@ function renderSearchResults() {
 
 //handles API call & response, then pushes preprocessed data to software features
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=24&sort=popularity&sortDirection=desc`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=4&sort=popularity&sortDirection=desc`
 
   let fetchedData;
 
@@ -143,18 +143,20 @@ async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
     }
   
 
-  const preProcessedSearchResults = fetchedData.results.map(result => ({
-    ...result,
-    title: capitalizeEveryWord(result.title)
-  }));
+  const rawResults = fetchedData.results.map(result => ({
+  ...result,
+  title: capitalizeEveryWord(result.title),
+  nutrition: result.nutrition ?? { nutrients: [] },
+  analyzedInstructions: result.analyzedInstructions ?? [],
+  extendedIngredients: result.extendedIngredients ?? []
+}));
 
-  console.log(preProcessedSearchResults);
+const recipeDataArray = generateSearchResults(rawResults, searchResultDivObj, projectContainer);
 
-  sessionStorage.setItem('searchResults', JSON.stringify(preProcessedSearchResults));
+// Save structured data (used by popups)
+sessionStorage.setItem('searchResults', JSON.stringify(recipeDataArray));
 
-  const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
-  manageFavorites(recipeDataArray);
-  setupPopupContent(recipeDataArray);
+manageFavorites(recipeDataArray);
 }
 
 //renders generated recipe data and provides them for software features
@@ -162,53 +164,42 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
   projectContainer.classList.remove('initial');
 
   const recipeDataArray = searchResults.map(result => {
+    if (!result || !result.id || !result.title) {
+      console.warn('Skipping invalid recipe:', result);
+      return null;
+    }
+
     const isFavorite = favoriteRecipes.some(favRecipe => favRecipe.id === result.id);
-    const heartIconName = isFavorite ? 'heart' : 'heart-outline';
+    
 
     return {
-      title: result.title,
+      title: result.title || 'Untitled Recipe',
       id: result.id,
-      ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || ['Ingredients unavailable'],
-      instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || ['Instructions unavailable'],
-      nutrition: Array.isArray(result.nutrition)
-      ? result.nutrition.map(item => {
-        const [name, rest] = item.split(':');
-        return {
-        name: name?.trim() || 'N/A',
-        amount: rest?.trim() || 'N/A'
-        };
-      })
-      : (result.nutrition?.nutrients || []).map(item => ({
-      name: item.name,
-      amount: `${item.amount}${item.unit}`
-      })),
-      cookingTimeMins: result.readyInMinutes,
-      dairyFree: result.dairyFree,
-      glutenFree: result.glutenFree,
-      vegan: result.vegan,
-      vegetarian: result.vegetarian,
-      html: `
-        <div class="item">
-          <img src="${result.image}" alt=""> 
-          <button class="favorite-button js-favorite-button"><ion-icon name="${heartIconName}" data-item-id=${result.id}></ion-icon></button>
-          <div>
-            <div class="flex-result-info">
-              <h1 class="title"><a class="title-Url" href="${result.sourceUrl}">${result.title}</a></h1>
-              <button class="recipe-button js-ingredients-button" data-popup-target="#popup" data-item-id=${result.id}>Recipe</button> 
-            </div>
-            <div class="flex-result-info flex-result-bottom">
-              <button class="nutrition-button js-nutrition-button" data-popup-target="#popup" data-item-id=${result.id}>Nutrition</button>
-              <button class="steps-button js-instructions-button" data-popup-target="#popup" data-item-id=${result.id}>Steps</button> 
-            </div>
-          </div>
-        </div>
-      `
+      ingredients: Array.isArray(result.extendedIngredients)
+        ? result.extendedIngredients.map(ing => ing.original)
+        : [],
+      instructions: Array.isArray(result.analyzedInstructions?.[0]?.steps)
+        ? result.analyzedInstructions[0].steps.map(step => step.step)
+        : [],
+      nutrition: Array.isArray(result.nutrition?.nutrients)
+        ? result.nutrition.nutrients.map(n => ({
+            name: n.name || 'N/A',
+            amount: `${n.amount || 0}${n.unit || ''}`
+          }))
+        : [],
+      cookingTimeMins: result.readyInMinutes || 'N/A',
+      dairyFree: result.dairyFree || false,
+      image: result.image || '', 
+      glutenFree: result.glutenFree || false,
+      vegan: result.vegan || false,
+      vegetarian: result.vegetarian || false,
+      html: generateRecipeHTML(result, isFavorite),
     };
-  });
+  }).filter(recipe => recipe !== null);
 
   console.log(recipeDataArray);
-
   searchResultDivObj.innerHTML = recipeDataArray.map(data => data.html).join('');
-
   return recipeDataArray;
 }
+
+

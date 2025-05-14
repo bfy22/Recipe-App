@@ -1,61 +1,23 @@
 import { renderPage } from "./main.js";
+import { generateRecipeHTML } from "./utils/renderHelper.js";
 
-
+// Exposed so other modules can reference favorite list
 export let favoriteRecipes = [];
 
 //fetches favorites from server endpoint with error handling and fills rendered buttons
-export async function renderFavorites() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    alert('Please log in to view your favorites');
-    renderPage('login');
-    return;
-  }
+function getRecipeDataById(id) {
+  const storedData = sessionStorage.getItem('searchResults');
+  if (!storedData) return null;
 
-  const favoritesDOM = document.querySelector('.js-favorites');
-  if (!favoritesDOM) {
-    console.warn('Favorites DOM element not found. Skipping renderFavorites.');
-    return;
-  }
-
-  try {
-    const response = await fetch('http://localhost:4000/favorites', {
-      headers: { Authorization: token },
-    });
-
-    if (response.ok) {
-      const favorites = await response.json();
-      //console.log('Fetched favorites:', favorites);
-      favoriteRecipes = favorites;
-
-      const favoritesHTML = favorites.map(recipe => `
-        ${recipe.html}`).join('');
-      favoritesDOM.innerHTML = favoritesHTML;
-
-      const heartIcons = favoritesDOM.querySelectorAll('ion-icon[data-item-id]');
-      heartIcons.forEach(icon => {
-        const recipeID = icon.getAttribute('data-item-id');
-        icon.setAttribute('name', 'heart');
-      });
-
-      
-    } else {
-      const errorMessage = await response.text();
-      console.error('Failed to fetch favorites:', errorMessage); 
-      alert('Failed to fetch favorites');
-    }
-  } catch (error) {
-    console.error('Error occured while fetching favorites:', error);
-    alert('An error occurred while fetching favorites');
-  }
+  const parsed = JSON.parse(storedData);
+  return parsed.find(recipe => recipe.id == id);
 }
 
+let isFavoritesListenerAttached = false;
 
-let isFavoritesListenerAttached = false; //flag to prevent multiple listeners
-
-//manages favorites list and button
-export function manageFavorites(recipeDataArray) {
-  if (isFavoritesListenerAttached) return; 
+// Attach favorite logic to heart buttons
+export function manageFavorites() {
+  if (isFavoritesListenerAttached) return;
   isFavoritesListenerAttached = true;
 
   document.body.addEventListener('click', async (event) => {
@@ -63,9 +25,12 @@ export function manageFavorites(recipeDataArray) {
     if (!favoriteButton) return;
 
     const heartIcon = favoriteButton.querySelector('ion-icon');
-    const recipeID = favoriteButton.querySelector('ion-icon').getAttribute('data-item-id');
-    const recipe = recipeDataArray.find(recipe => recipe.id == recipeID);
-    if (!recipe) return;
+    const recipeID = heartIcon?.getAttribute('data-item-id');
+    const recipe = getRecipeDataById(recipeID);
+    if (!recipe) {
+      console.warn(`Recipe not found for favorite toggle: ID ${recipeID}`);
+      return;
+    }
 
     const token = localStorage.getItem('token');
     if (!token) {
@@ -76,30 +41,66 @@ export function manageFavorites(recipeDataArray) {
 
     heartIcon.classList.add('bounce');
     setTimeout(() => heartIcon.classList.remove('bounce'), 400);
-    
 
     const favIndex = favoriteRecipes.findIndex(favRecipe => favRecipe.id == recipeID);
 
     if (favIndex !== -1) {
-      
       favoriteRecipes.splice(favIndex, 1);
       heartIcon.setAttribute('name', 'heart-outline');
-      await updateFavoritesOnServer(recipe, 'remove', token); 
-  
+      await updateFavoritesOnServer(recipe, 'remove', token);
     } else {
-      
       favoriteRecipes.push(recipe);
       heartIcon.setAttribute('name', 'heart');
-      await updateFavoritesOnServer(recipe, 'add', token); 
-      
+      await updateFavoritesOnServer(recipe, 'add', token);
     }
 
-  renderFavorites();
-    
+    renderFavorites(); 
   });
 }
 
-// Helper function to update favorites on the server
+// Refresh favorites from server
+export async function renderFavorites() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Please log in to view your favorites');
+    renderPage('login');
+    return;
+  }
+
+  const favoritesDOM = document.querySelector('.js-favorites');
+  if (!favoritesDOM) {
+    console.warn('Favorites DOM element not found.');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:4000/favorites', {
+      headers: { Authorization: token },
+    });
+
+    if (response.ok) {
+      const favorites = await response.json();
+      favoriteRecipes = favorites;
+
+      const favoritesHTML = favorites.map(recipe => generateRecipeHTML(recipe, true)).join('');
+      favoritesDOM.innerHTML = favoritesHTML;
+
+      
+      favoritesDOM.querySelectorAll('ion-icon[data-item-id]').forEach(icon => {
+        icon.setAttribute('name', 'heart');
+      });
+    } else {
+      const errorMessage = await response.text();
+      console.error('Failed to fetch favorites:', errorMessage);
+      alert('Failed to fetch favorites');
+    }
+  } catch (error) {
+    console.error('Error fetching favorites:', error);
+    alert('An error occurred while fetching favorites');
+  }
+}
+
+// Server sync
 async function updateFavoritesOnServer(recipe, action, token) {
   try {
     const response = await fetch('http://localhost:4000/favorites', {
@@ -120,5 +121,4 @@ async function updateFavoritesOnServer(recipe, action, token) {
     console.error('Error updating favorites on server:', error);
     alert('An error occurred while updating favorites');
   }
-  
 }

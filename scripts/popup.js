@@ -1,63 +1,88 @@
 import { capitalizeEveryWord } from "./utils/capitlizeEveryWord.js";
+
 const overlay = document.getElementById('overlay');
 
+// Shared helper: Fetch the latest recipe data from sessionStorage
+function getRecipeDataById(id) {
+  const storedData = sessionStorage.getItem('searchResults');
+  if (!storedData) return null;
+
+  const parsed = JSON.parse(storedData);
+  return parsed.find(recipe => recipe.id == id); 
+}
 
 //extracts clicked button's js-classname (header) to push correct recipe info into Popup
-export function setupPopupContent(recipeDataArray) { 
+export function setupPopupContent() {
   document.body.addEventListener('click', event => {
-    if((event.target.classList.contains('js-ingredients-button')) || (event.target.classList.contains('js-instructions-button')) || (event.target.classList.contains('js-nutrition-button'))) {
+    // Handle nutrition / ingredients / steps buttons
+    if (
+      event.target.classList.contains('js-ingredients-button') ||
+      event.target.classList.contains('js-instructions-button') ||
+      event.target.classList.contains('js-nutrition-button')
+    ) {
       const recipeID = event.target.getAttribute('data-item-id');
-      const recipeData = recipeDataArray.find(recipe => recipe.id === parseInt(recipeID)); 
+      const recipeData = getRecipeDataById(recipeID);
+      if (!recipeData) {
+        console.warn(`No recipe found for ID: ${recipeID}`);
+        return;
+      }
 
-      const eventClassNames = event.target.className.split(' ');
-      const secondClass = eventClassNames[1];
-      const header = secondClass.split('-')[1]; //info title and recipeData variable
+      const eventClass = event.target.className.split(' ')[1]; // e.g., js-ingredients-button
+      const header = eventClass.split('-')[1]; // ingredients, instructions, nutrition
       let bodyContent = '';
 
       if (header === 'nutrition') {
-        bodyContent = recipeData.nutrition
-          .map(nutrient =>
+        if (!Array.isArray(recipeData.nutrition) || recipeData.nutrition.length === 0) {
+
+          console.warn(`Invalid or missing nutrition data for recipe ID ${recipeID}`);
+          bodyContent = '<li>Nutrition information is unavailable.</li>';
+        } else {
+          bodyContent = recipeData.nutrition.map(nutrient =>
             `<li><strong>${nutrient.name}:</strong> ${nutrient.amount}</li>`
           ).join('');
-      } else {
-        bodyContent = recipeData[header]
-          .map(item => `<li>${item}</li>`)
-          .join('');
+        }
+        } else {
+        const dataArray = recipeData[header];
+        if (!Array.isArray(dataArray) || dataArray.length === 0) {
+          console.warn(`Invalid or missing "${header}" data for recipe ID ${recipeID}`);
+          bodyContent = `<li>${capitalizeEveryWord(header)} information is unavailable.</li>`;
+        } else {
+          bodyContent = dataArray.map(item => `<li>${item}</li>`).join('');
+        }
       }
+
+
       
-      if(recipeData) {
-        //for each recipe, checks for correct diet info to display on popup-header
-        const diet = (recipeData.vegan) ? 'Vegan' : (recipeData.vegetarian) ? 'Vegetarian' : '';
-        document.querySelector('.popup-header .diet').innerHTML = diet;
+      const diet = recipeData.vegan ? 'Vegan' : recipeData.vegetarian ? 'Vegetarian' : '';
+      document.querySelector('.popup-header .diet').innerHTML = diet;
 
-        const dairyFree = recipeData.dairyFree ? 'Dairy Free' : '';
-        document.querySelector('.popup-header .dairyFree').innerHTML = dairyFree;
+      const dairyFree = recipeData.dairyFree ? 'Dairy Free' : '';
+      document.querySelector('.popup-header .dairyFree').innerHTML = dairyFree;
 
-        const glutenFree = recipeData.glutenFree ? 'Gluten Free' : 'Recipe';
-        document.querySelector('.popup-header .title').innerHTML = glutenFree;
+      const glutenFree = recipeData.glutenFree ? 'Gluten Free' : 'Recipe';
+      document.querySelector('.popup-header .title').innerHTML = glutenFree;
 
-        document.querySelector('.popup-header .cookingTime').innerHTML = `${recipeData.cookingTimeMins} mins`;
+      document.querySelector('.popup-header .cookingTime').innerHTML = `${recipeData.cookingTimeMins} mins`;
 
-        const popupBody = document.querySelector('#popup .popup-body');
-        popupBody.innerHTML = `
-          <h2 class="pop-recipe-title">${recipeData.title}</h2>
-          <h3 class="pop-info-header">${capitalizeEveryWord(header)}</h3>
-          <ul class="pop-list">
-            ${bodyContent}
-          </ul>
-        `;
-        openPopup(document.getElementById('popup'));
-      }
+      const popupBody = document.querySelector('#popup .popup-body');
+      popupBody.innerHTML = `
+        <h2 class="pop-recipe-title">${recipeData.title}</h2>
+        <h3 class="pop-info-header">${capitalizeEveryWord(header)}</h3>
+        <ul class="pop-list">
+          ${bodyContent}
+        </ul>
+      `;
+
+      openPopup(document.getElementById('popup'));
     }
 
-    if(event.target.matches('[data-close-button]') || event.target === overlay) {
+    // Close logic
+    if (event.target.matches('[data-close-button]') || event.target === overlay) {
       closePopup(document.querySelector('.popup.active'));
     }
-    
   });
 }
 
-//to switch between popup styles that reveal or hide it
 function openPopup(popup) {
   if (popup) {
     popup.classList.add('active');
@@ -69,16 +94,5 @@ function closePopup(popup) {
   if (popup) {
     popup.classList.remove('active');
     overlay.classList.remove('active');
-  } 
+  }
 }
-
-/*function getDiet(boolVegan, boolVegetarian) {
-  let diet =''
-  if(boolVegan) {
-    diet = 'Vegan';
-  } else if(boolVegetarian) {
-    diet = 'Vegetarian';
-  } 
-  return diet;
-}*/
-
