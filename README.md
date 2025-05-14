@@ -1,4 +1,4 @@
-# Recipe App
+# Recipe Matrix
 
 ## Overview
 
