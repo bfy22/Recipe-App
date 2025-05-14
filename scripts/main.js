@@ -118,7 +118,7 @@ function renderSearchResults() {
 
 //handles API call & response, then pushes preprocessed data to software features
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=24&offset=0&sort=popularity&sortDirection=desc`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=24&sort=popularity&sortDirection=desc`
 
   let fetchedData;
 
@@ -168,8 +168,8 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
     return {
       title: result.title,
       id: result.id,
-      ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],
-      instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
+      ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || ['Ingredients unavailable'],
+      instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || ['Instructions unavailable'],
       nutrition: Array.isArray(result.nutrition)
       ? result.nutrition.map(item => {
         const [name, rest] = item.split(':');
