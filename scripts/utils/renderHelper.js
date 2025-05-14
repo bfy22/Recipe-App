@@ -3,14 +3,14 @@ export function generateRecipeHTML(recipe, isFavorite = false) {
 
   return `
     <div class="item">
-      <img src="${recipe.image || ''}" alt=""> 
+      <img src="${recipe.image || 'fallback.jpg'}" alt="${recipe.title}"/>
       <button class="favorite-button js-favorite-button">
         <ion-icon name="${heartIconName}" data-item-id="${recipe.id}"></ion-icon>
       </button>
       <div>
         <div class="flex-result-info">
           <h1 class="title">
-            <a class="title-Url" href="${recipe.sourceUrl || '#'}">${recipe.title}</a>
+            <a class="title-Url" href="${recipe.sourceUrl || '#'}" target="_blank" rel="noopener noreferrer">${recipe.title}</a>
           </h1>
           <button class="recipe-button js-ingredients-button" data-popup-target="#popup" data-item-id="${recipe.id}">Recipe</button> 
         </div>

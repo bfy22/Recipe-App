@@ -146,6 +146,8 @@ async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
   const rawResults = fetchedData.results.map(result => ({
   ...result,
   title: capitalizeEveryWord(result.title),
+  image: result.image || '',
+  sourceUrl: result.sourceUrl || '',
   nutrition: result.nutrition ?? { nutrients: [] },
   analyzedInstructions: result.analyzedInstructions ?? [],
   extendedIngredients: result.extendedIngredients ?? []
@@ -188,17 +190,23 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
           }))
         : [],
       cookingTimeMins: result.readyInMinutes || 'N/A',
+      sourceUrl: result.sourceUrl || '#',
       dairyFree: result.dairyFree || false,
       image: result.image || '', 
       glutenFree: result.glutenFree || false,
       vegan: result.vegan || false,
       vegetarian: result.vegetarian || false,
-      html: generateRecipeHTML(result, isFavorite),
-    };
+      html: generateRecipeHTML({
+      ...result,
+        image: result.image || '',
+        sourceUrl: result.sourceUrl || '#',
+      }, isFavorite),
+  };
   }).filter(recipe => recipe !== null);
 
   console.log(recipeDataArray);
   searchResultDivObj.innerHTML = recipeDataArray.map(data => data.html).join('');
+  setupPopupContent();
   return recipeDataArray;
 }
 
