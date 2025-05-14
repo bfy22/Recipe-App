@@ -141,7 +141,7 @@ async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
     console.error('Error during API call:', error);
     showCustomAlert('Check your internet connection and try again!');
     }
-  }
+  
 
   const preProcessedSearchResults = fetchedData.results.map(result => ({
     ...result,
@@ -155,7 +155,7 @@ async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
   const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
   manageFavorites(recipeDataArray);
   setupPopupContent(recipeDataArray);
-
+}
 
 //renders generated recipe data and provides them for software features
 function generateSearchResults(searchResults, searchResultDivObj, projectContainer) {
