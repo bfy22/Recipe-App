@@ -118,7 +118,7 @@ function renderSearchResults() {
 
 //handles API call & response, then pushes preprocessed data to software features
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=4&sort=popularity&sortDirection=desc`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=8&sort=popularity&sortDirection=desc`
 
   let fetchedData;
 
@@ -128,7 +128,7 @@ async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
     if(response.ok) {
       fetchedData = await response.json();
     } else {
-      console.warn('API response not OK. Falling back to default recipes.');
+      console.warn('API response not OK.');
       
     }
 
