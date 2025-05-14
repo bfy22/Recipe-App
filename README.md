@@ -2,7 +2,7 @@
 
 ## Overview
 
-Recipe Matrix is a web application designed to help users manage their favorite recipes. It allows users to to search and save their favorite recipes in their account for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
+Recipe Matrix is a web application designed to help users manage their favorite recipes. It allows users to search and save their favorite recipes in their account for easy access. Built with a focus on simplicity and usability, the app provides a seamless experience for recipe enthusiasts.
 
 ## Features
 
