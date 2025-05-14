@@ -12,10 +12,19 @@ export function setupPopupContent(recipeDataArray) {
       const eventClassNames = event.target.className.split(' ');
       const secondClass = eventClassNames[1];
       const header = secondClass.split('-')[1]; //info title and recipeData variable
-      const bodyContent = recipeData[header].map(item => `<li>${item}</li>`).join('');
+      let bodyContent = '';
+
+      if (header === 'nutrition') {
+        bodyContent = recipeData.nutrition
+          .map(nutrient =>
+            `<li><strong>${nutrient.name}:</strong> ${nutrient.amount}</li>`
+          ).join('');
+      } else {
+        bodyContent = recipeData[header]
+          .map(item => `<li>${item}</li>`)
+          .join('');
+      }
       
-
-
       if(recipeData) {
         //for each recipe, checks for correct diet info to display on popup-header
         const diet = (recipeData.vegan) ? 'Vegan' : (recipeData.vegetarian) ? 'Vegetarian' : '';

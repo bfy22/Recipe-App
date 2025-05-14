@@ -166,6 +166,12 @@ app.post('/favorites', authenticateToken, async (req, res) => {
 app.get(/^\/(?!api\/|scripts\/|stylesheets\/|images\/).*/, (req, res) => {
   console.log(`Catch-all route triggered for path: ${req.path}`); 
   res.sendFile(path.join(__dirname, '../index.html'));
+  
+});
+
+//catch to ensure json file is fetched
+app.get('/defaultRecipes.json', (req, res) => {
+  res.sendFile(path.join(__dirname, '../defaultRecipes.json'));
 });
 
 app.listen(4000, () => console.log('Server running on http://localhost:4000'));

@@ -5,6 +5,7 @@ import { manageFavorites, renderFavorites, favoriteRecipes } from './favorites.j
 import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';
 import { setupRegister, setupLogin, setupLogout } from './userSession.js';
+import { showCustomAlert } from './utils/customAlert.js';
 
 
 const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
@@ -117,21 +118,44 @@ function renderSearchResults() {
 
 //handles API call & response, then pushes preprocessed data to software features
 async function callAPI(userSearchQuery, searchResultDivObj, projectContainer) {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=12`; //&offset=0&sort=popularity&sortDirection=desc`
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_Key}&query=${userSearchQuery}&addRecipeNutrition=true&addRecipeInstructions=true&instructionsRequired=true&fillIngredients=true&number=8`; //&offset=0&sort=popularity&sortDirection=desc`
+
+  let fetchedData;
+
+  try { 
   const response = await fetch(baseURL);
-  const fetchedData = await response.json();
+
+    if(response.ok) {
+      fetchedData = await response.json();
+    } else {
+      console.warn('API response not OK. Falling back to default recipes.');
+      
+    }
+
+    if (!fetchedData || !fetchedData.results || fetchedData.results.length === 0) {
+      showCustomAlert('No results found, try again!');
+      return;
+    }
+
+  } catch (error) {
+    console.error('Error during API call:', error);
+    showCustomAlert('Check your internet connection and try again!');
+    }
+  }
 
   const preProcessedSearchResults = fetchedData.results.map(result => ({
     ...result,
     title: capitalizeEveryWord(result.title)
   }));
 
+  console.log(preProcessedSearchResults);
+
   sessionStorage.setItem('searchResults', JSON.stringify(preProcessedSearchResults));
 
   const recipeDataArray = generateSearchResults(preProcessedSearchResults, searchResultDivObj, projectContainer);
   manageFavorites(recipeDataArray);
   setupPopupContent(recipeDataArray);
-}
+
 
 //renders generated recipe data and provides them for software features
 function generateSearchResults(searchResults, searchResultDivObj, projectContainer) {
@@ -146,7 +170,18 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
       id: result.id,
       ingredients: result.extendedIngredients?.map(ingredient => ingredient.original) || [],
       instructions: result.analyzedInstructions?.[0]?.steps?.map(step => step.step) || [],
-      nutrition: result.nutrition.nutrients.map(item => `${item.name}: ${item.amount}${item.unit}`),
+      nutrition: Array.isArray(result.nutrition)
+      ? result.nutrition.map(item => {
+        const [name, rest] = item.split(':');
+        return {
+        name: name?.trim() || 'N/A',
+        amount: rest?.trim() || 'N/A'
+        };
+      })
+      : (result.nutrition?.nutrients || []).map(item => ({
+      name: item.name,
+      amount: `${item.amount}${item.unit}`
+      })),
       cookingTimeMins: result.readyInMinutes,
       dairyFree: result.dairyFree,
       glutenFree: result.glutenFree,
@@ -170,6 +205,8 @@ function generateSearchResults(searchResults, searchResultDivObj, projectContain
       `
     };
   });
+
+  console.log(recipeDataArray);
 
   searchResultDivObj.innerHTML = recipeDataArray.map(data => data.html).join('');
 
