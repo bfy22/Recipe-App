@@ -8,7 +8,7 @@ import { setupRegister, setupLogin, setupLogout } from './userSession.js';
 import { showCustomAlert } from './utils/customAlert.js';
 import { generateRecipeHTML } from './utils/renderHelper.js';
 
-const API_Key = 'd356faf76ff245fc87c936fbaa616aeb';
+const API_Key = 'e3ff50cdf8454076a220a283f064998b';
 let userSearchQuery = '';
 
 
