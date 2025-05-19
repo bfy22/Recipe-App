@@ -33,3 +33,21 @@ if (capitalizeEveryWord('!grilled-cheese and tomato soup') === 'Grilled Cheese a
 } else {
   console.log('failed');
 }
+
+if (capitalizeEveryWord('grilled-che!ese and tomato soup') === 'Grilled Cheese and Tomato Soup') {
+  console.log('passed');
+} else {
+  console.log('failed');
+}
+
+if (capitalizeEveryWord('gril"led-che!ese and tomato soup') === 'Grilled Cheese and Tomato Soup') {
+  console.log('passed');
+} else {
+  console.log('failed');
+}
+
+if (capitalizeEveryWord('grill"ed-!cheese and tomato soup') === 'Grilled Cheese and Tomato Soup') {
+  console.log('passed');
+} else {
+  console.log('failed');
+}
