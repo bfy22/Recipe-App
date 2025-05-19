@@ -3,6 +3,8 @@ import { capitalizeEveryWord } from "../utils/capitalizeEveryWord.js";
 //unit tests for capitalizing recipe title function
 
 //1-2 test cases
+
+console.log('Capitalizes the first letter of each word. If passed, then successful')
 if (capitalizeEveryWord('bisso') === 'Bisso') {
   console.log('passed');
 } else {
@@ -16,6 +18,8 @@ if (capitalizeEveryWord('grilled cheese and tomato soup') === 'Grilled Cheese an
 }
 
 //edge cases
+
+console.log('Attempts to capitalize the first letter of each word with non-alphabet characters involved in different positions')
 if (capitalizeEveryWord('Grilled-cheese and tomato soup') === 'Grilled Cheese and Tomato Soup') {
   console.log('passed');
 } else {
