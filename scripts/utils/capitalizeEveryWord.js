@@ -5,6 +5,8 @@ export function capitalizeEveryWord(string) {
   let modifiedString = [];
   let modifiedWord = '';
 
+
+
    targetedWords.forEach((word) => {
     if(excludeCases.includes(word)) {
       modifiedString.push(word);

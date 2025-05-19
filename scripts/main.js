@@ -1,6 +1,6 @@
 import {} from 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'; //icons
 import { setupPopupContent } from './popup.js';
-import { capitalizeEveryWord } from './utils/capitlizeEveryWord.js';
+import { capitalizeEveryWord } from './utils/capitalizeEveryWord.js';
 import { manageFavorites, renderFavorites, favoriteRecipes } from './favorites.js';
 import { requireAuth } from './utils/authentication.js';
 import { templates } from './templatesHTML.js';

@@ -1,4 +1,4 @@
-import { capitalizeEveryWord } from "./utils/capitlizeEveryWord.js";
+import { capitalizeEveryWord } from "./utils/capitalizeEveryWord.js";
 
 const overlay = document.getElementById('overlay');
 
