@@ -3,7 +3,7 @@
   width: 100%;
   display: grid;
   grid-gap: 30px;
-  grid-template: auto / repeat(auto-fit, minmax(320px, 1fr)); 
+  grid-template: auto / repeat(auto-fit, minmax(280px, 1fr)); 
   justify-items :center;
   
   
