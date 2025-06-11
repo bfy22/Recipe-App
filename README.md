@@ -66,6 +66,5 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 - MongoDB: NoSQL database for storing recipes and user data.
 - bcryptjs: Library for hashing passwords securely.
 - jsonwebtoken: Library for generating and verifying JSON Web Tokens (JWT).
-- Body-Parser: Middleware for parsing incoming request bodies.
 - CORS: Middleware to enable Cross-Origin Resource Sharing.
 
