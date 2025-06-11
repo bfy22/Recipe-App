@@ -67,4 +67,5 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 - bcryptjs: Library for hashing passwords securely.
 - jsonwebtoken: Library for generating and verifying JSON Web Tokens (JWT).
 - CORS: Middleware to enable Cross-Origin Resource Sharing.
+-dotenv: For managing sensitive info, secrets and settings like database URI and JWT secret, keeping them out of app code
 

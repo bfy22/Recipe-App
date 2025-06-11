@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -11,10 +10,10 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use(express.static(path.join(__dirname, '../'), { maxAge: 0 })); // Serve static files from the parent directory
+app.use(express.static(path.join(__dirname, '../public/'), { maxAge: 0 })); // Serve static files from the parent directory
 
 
-mongoose.connect('mongodb://localhost:27017/recipeApp')
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/recipeApp')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Failed to connect to MongoDB:', err));
 

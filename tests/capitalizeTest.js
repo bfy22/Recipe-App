@@ -1,4 +1,4 @@
-import { capitalizeEveryWord } from "../utils/capitalizeEveryWord.js";
+import { capitalizeEveryWord } from "../public/scripts/utils/capitalizeEveryWord.js";
 
 //unit tests for capitalizing recipe title function
 
