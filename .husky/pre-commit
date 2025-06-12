@@ -1,6 +1,4 @@
 #!/bin/sh
-echo "🔍 Pre-commit hook is running..."
-
 if git diff --cached --name-only | grep -q "^.env$"; then
   echo "❌ Committing .env is not allowed!"
   echo "💡 Run: git restore --staged .env"

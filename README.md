@@ -69,3 +69,7 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 - CORS: Middleware to enable Cross-Origin Resource Sharing.
 -dotenv: For managing sensitive info, secrets and settings like database URI and JWT secret, keeping them out of app code
 
+
+Note: .env is included in the repo for structure only.
+Any changes to this file will be blocked from commit via a pre-commit hook.
+
