@@ -1,6 +1,11 @@
 //backend routing and error-handling of userSession features 
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+
+
 
 router.post('/register', async (req, res) => {
   console.log('Raw request body:', req.body); // Debug log
@@ -51,7 +56,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).send('Invalid credentials');
     }
 
-    const token = jwt.sign({ username: user.username }, 'SECRET_KEY');
+    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET);
     res.json({ token });
   } catch (error) {
     console.error('Error during login:', error);

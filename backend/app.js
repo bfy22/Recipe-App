@@ -47,7 +47,7 @@ app.get('/test-db', async (req, res) => {
 // Catch-all route to ensure all requests serve index.html for SPA
 app.get(/^\/(?!api\/|scripts\/|stylesheets\/|images\/).*/, (req, res) => {
   console.log(`Catch-all route triggered for path: ${req.path}`); 
-  res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.join(__dirname, '..public/index.html'));
   
 });
 

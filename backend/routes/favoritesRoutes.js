@@ -16,16 +16,29 @@ router.get("/", authenticateToken, async (req, res) => {
 });
 
 
-router.post("/", authenticateToken, async (req, res) => {  //Get the recipe and action from the request body
+router.post("/", authenticateToken, async (req, res) => {
   try {
-    const { recipe } = req.body;
+    const { recipe, action } = req.body;
     const user = await User.findOne({ username: req.user.username });
-    user.favorites.push(recipe);
+
+    if (!user) return res.status(404).send("User not found");
+    if (!Array.isArray(user.favorites)) user.favorites = [];
+
+    if (action === 'add') {
+      user.favorites.push(recipe);
+    } else if (action === 'remove') {
+      user.favorites = user.favorites.filter(r => r.id !== recipe.id);
+    } else {
+      return res.status(400).send("Invalid action");
+    }
+
     await user.save();
-    res.status(201).send("Favorite added");
+    res.status(200).send("Favorites updated");
   } catch (err) {
-    res.status(500).send("Error adding favorite");
+    console.error("Error updating favorites:", err);
+    res.status(500).send("Error updating favorites");
   }
 });
+
 
 module.exports = router;

@@ -74,8 +74,8 @@ export async function renderFavorites() {
   }
 
   try {
-    const response = await fetch('http://localhost:4000/favorites', {
-      headers: { Authorization: token },
+    const response = await fetch('http://localhost:4000/api/favorites', {
+      headers: {  'Authorization': `Bearer ${token}` },
     });
 
     if (response.ok) {
@@ -103,11 +103,11 @@ export async function renderFavorites() {
 // Server sync
 async function updateFavoritesOnServer(recipe, action, token) {
   try {
-    const response = await fetch('http://localhost:4000/favorites', {
+    const response = await fetch('http://localhost:4000/api/favorites', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
+         'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ recipe, action }),
     });

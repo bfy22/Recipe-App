@@ -29,7 +29,7 @@ export function setupLogin() {
       const password = document.getElementById('password').value;
 
       try {
-        const response = await fetch('http://localhost:4000/login', {
+        const response = await fetch('http://localhost:4000/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password }),
@@ -38,20 +38,17 @@ export function setupLogin() {
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('token', data.token);
-          
+
           const redirectPage = sessionStorage.getItem('redirectAfterLogin');
           showCustomAlert('Login successful!');
 
           if (redirectPage) {
             sessionStorage.removeItem('redirectAfterLogin');
-            setTimeout(() => {
-              renderPage(redirectPage);
-            }, 1200);
+            setTimeout(() => renderPage(redirectPage), 1200);
           } else {
-            setTimeout(() => {
-              renderPage('home');
-            }, 1200);
+            setTimeout(() => renderPage('home'), 1200);
           }
+
         } else {
           showCustomAlert('Invalid username or password');
         }
@@ -63,6 +60,7 @@ export function setupLogin() {
   });
 }
 
+
 export function setupRegister() {
   const registerForm = document.getElementById('register-form');
   if (!registerForm || isRegisterListenerAttached) return;
@@ -73,20 +71,18 @@ export function setupRegister() {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-  
-    //console.log('Submitting registration:', { username, password }); 
-  
+
     try {
-      const registerResponse = await fetch('http://localhost:4000/register', {
+      const registerResponse = await fetch('http://localhost:4000/api/auth/register', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-  
+
       if (registerResponse.ok) {
         showCustomAlert('Registration successful! Logging you in...');
-        
-        const loginResponse = await fetch('http://localhost:4000/login', {
+
+        const loginResponse = await fetch('http://localhost:4000/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password }),
@@ -95,7 +91,6 @@ export function setupRegister() {
         if (loginResponse.ok) {
           const data = await loginResponse.json();
           localStorage.setItem('token', data.token);
-          //console.log('Login successful, token stored:', data.token);
           setTimeout(() => {
             renderPage('home');
           }, 1200);
@@ -103,9 +98,9 @@ export function setupRegister() {
           showCustomAlert('Registration successful, but login failed. Please log in manually.');
           renderPage('login');
         }
-        
+
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = await registerResponse.text();
         console.error('Registration failed:', errorMessage);
         showCustomAlert(`Registration failed: ${errorMessage}`);
       }
@@ -115,6 +110,7 @@ export function setupRegister() {
     }
   });
 }
+
 
 
 //deals with element visibility, token removal and providing a next clean session
