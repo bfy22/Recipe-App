@@ -8,5 +8,11 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.2"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
+
+  
+  
 }

@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const path = require('path'); // Import the path module for cross-compatibility and filepath error prevention
 
+require('dotenv').config();
+
 const app = express();
 app.use(express.json());
 app.use(cors());
