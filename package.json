@@ -11,8 +11,13 @@
   },
   "devDependencies": {
     "husky": "^9.1.7"
-  }
+  },
+  "scripts": {
+  "start": "node backend/app.js"
+}
 
   
   
 }
+
+
