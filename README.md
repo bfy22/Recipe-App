@@ -42,7 +42,6 @@ npm install
 
 # Start the application server
 npm start
-
 ```
 
 
