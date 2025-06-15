@@ -1,11 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const path = require('path'); // Import the path module for cross-compatibility and filepath error prevention
 
-const User = require('./models/user'); 
+const path = require('path'); // Import the path module for cross-compatibility and filepath error prevention
 const authRoutes = require('./routes/authRoutes');
 const favoritesRoutes = require('./routes/favoritesRoutes');
 
@@ -28,20 +25,6 @@ app.use('/api/favorites', favoritesRoutes)
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/recipeApp')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Failed to connect to MongoDB:', err));
-
-
-/*Database Test
-app.get('/test-db', async (req, res) => {
-  try {
-    console.log('Fetching users from database...'); 
-    const users = await User.find();
-    //console.log('Users fetched:', users); 
-    res.json(users);
-  } catch (error) {
-    console.error('Database connection error:', error);
-    res.status(500).send('Database connection error');
-  }
-});*/ 
 
 
 // Catch-all route to ensure all requests serve index.html for SPA
