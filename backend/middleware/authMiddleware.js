@@ -1,4 +1,4 @@
-//JWT verification
+//JWT verification upon user's action
 const jwt = require("jsonwebtoken");
 
 function authenticateToken(req, res, next) {

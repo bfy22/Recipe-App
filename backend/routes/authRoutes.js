@@ -39,7 +39,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
+//login authentication, with creationa and assignment of token to login session
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
