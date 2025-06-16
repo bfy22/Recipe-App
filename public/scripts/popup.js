@@ -1,15 +1,7 @@
 import { capitalizeEveryWord } from "./utils/capitalizeEveryWord.js";
+import { getRecipeDataByIdFromStorage } from "./utils/getRecipeDatabyId.js";
 
 const overlay = document.getElementById('overlay');
-
-// Shared helper: Fetch the latest recipe data from sessionStorage
-function getRecipeDataById(id) {
-  const storedData = sessionStorage.getItem('searchResults');
-  if (!storedData) return null;
-
-  const parsed = JSON.parse(storedData);
-  return parsed.find(recipe => recipe.id == id); 
-}
 
 //extracts clicked button's js-classname (header) to push correct recipe info into Popup
 export function setupPopupContent() {
@@ -21,7 +13,7 @@ export function setupPopupContent() {
       event.target.classList.contains('js-nutrition-button')
     ) {
       const recipeID = event.target.getAttribute('data-item-id');
-      const recipeData = getRecipeDataById(recipeID);
+      const recipeData = getRecipeDataByIdFromStorage(recipeID);
       if (!recipeData) {
         console.warn(`No recipe found for ID: ${recipeID}`);
         return;
