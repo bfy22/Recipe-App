@@ -29,10 +29,12 @@ Recipe Matrix is a web application designed to help users manage their favorite 
 - Navigate to the Cloned Repository: Move into the project directory.
 - Install Dependencies: Use "npm install" to install the necessary packages.
 
-- Start the Application: Start the server by running the node command on the server.js file.
+- In the .env file, type your secret key and optionally, your preferred MongoDB URL. 
+
+- Start the Application: Start the server by running the "npm start" command in the terminal.
 ```
 # Clone the repository from GitHub
-git clone https://github.com/bfy22/Recipe-App.git
+git clone https://github.com/bfy22/Recipe-Matrix.git
 
 # Navigate to the cloned repository
 cd Recipe-App
@@ -66,7 +68,7 @@ Once the server is running, the terminal will provide a link (e.g., http://local
 - bcryptjs: Library for hashing passwords securely.
 - jsonwebtoken: Library for generating and verifying JSON Web Tokens (JWT).
 - CORS: Middleware to enable Cross-Origin Resource Sharing.
--  dotenv: For managing sensitive info, secrets and settings like database URI and JWT secret, keeping them out of app code
+- dotenv: For managing sensitive info, secrets and settings like database URI and JWT secret, keeping them out of app code
 - Husky: git hook manager
 
 
