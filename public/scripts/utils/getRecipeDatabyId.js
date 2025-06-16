@@ -1,11 +1,5 @@
 //Fetches the latest recipe data from data source
-export function getRecipeDataByIdFromStorage(id) {
-  const storedData = JSON.parse(sessionStorage.getItem('searchResults') || '[]');
-  return getRecipeDataById(id, storedData);
-}
-
-
-export function getRecipeDataByIdFromFavorites(id, favoriteRecipes) {
+export function getRecipeDataByIdFromDataSources(id, favoriteRecipes) {
   const combinedData = [
     ...JSON.parse(sessionStorage.getItem('searchResults') || '[]'),
     ...favoriteRecipes

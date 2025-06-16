@@ -1,9 +1,10 @@
 import { capitalizeEveryWord } from "./utils/capitalizeEveryWord.js";
-import { getRecipeDataByIdFromStorage } from "./utils/getRecipeDatabyId.js";
+import { getRecipeDataByIdFromDataSources } from "./utils/getRecipeDatabyId.js";
+import { favoriteRecipes } from "./favorites.js"; 
 
 const overlay = document.getElementById('overlay');
 
-//extracts clicked button's js-classname (header) to push correct recipe info into Popup
+// Extracts clicked button's js-classname (header) to push correct recipe info into Popup
 export function setupPopupContent() {
   document.body.addEventListener('click', event => {
     // Handle nutrition / ingredients / steps buttons
@@ -13,9 +14,10 @@ export function setupPopupContent() {
       event.target.classList.contains('js-nutrition-button')
     ) {
       const recipeID = event.target.getAttribute('data-item-id');
-      const recipeData = getRecipeDataByIdFromStorage(recipeID);
+      const recipeData = getRecipeDataByIdFromDataSources(recipeID, favoriteRecipes);
+
       if (!recipeData) {
-        console.warn(`No recipe found for ID: ${recipeID}`);
+        console.warn(`No recipe found for popup ID: ${recipeID}`);
         return;
       }
 
@@ -25,7 +27,6 @@ export function setupPopupContent() {
 
       if (header === 'nutrition') {
         if (!Array.isArray(recipeData.nutrition) || recipeData.nutrition.length === 0) {
-
           console.warn(`Invalid or missing nutrition data for recipe ID ${recipeID}`);
           bodyContent = '<li>Nutrition information is unavailable.</li>';
         } else {
@@ -33,7 +34,7 @@ export function setupPopupContent() {
             `<li><strong>${nutrient.name}:</strong> ${nutrient.amount}</li>`
           ).join('');
         }
-        } else {
+      } else {
         const dataArray = recipeData[header];
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
           console.warn(`Invalid or missing "${header}" data for recipe ID ${recipeID}`);
@@ -43,8 +44,6 @@ export function setupPopupContent() {
         }
       }
 
-
-      
       const diet = recipeData.vegan ? 'Vegan' : recipeData.vegetarian ? 'Vegetarian' : '';
       document.querySelector('.popup-header .diet').innerHTML = diet;
 

@@ -1,6 +1,6 @@
 import { renderPage } from "./main.js";
 import { generateRecipeHTML } from "./utils/renderHelper.js";
-import { getRecipeDataByIdFromFavorites } from "./utils/getRecipeDatabyId.js";
+import { getRecipeDataByIdFromDataSources } from "./utils/getRecipeDatabyId.js";
 
 // Exposed so other modules can reference favorite list
 export let favoriteRecipes = [];
@@ -27,7 +27,7 @@ export function manageFavorites() {
 
     const heartIcon = favoriteButton.querySelector('ion-icon');
     const recipeID = heartIcon?.getAttribute('data-item-id');
-    const recipe = getRecipeDataByIdFromFavorites(recipeID, favoriteRecipes);
+    const recipe = getRecipeDataByIdFromDataSources(recipeID, favoriteRecipes);
     if (!recipe) {
       console.warn(`Recipe not found for favorite toggle: ID ${recipeID}`);
       return;
